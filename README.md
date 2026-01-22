@@ -370,17 +370,20 @@ last_plot() +
 
 ``` r
 real_fries_table <- data.frame(id_fry = 1:7, 
-                               seconds = c(1, 1, 2, 1, 2, 3, 1),
+                               seconds = c(1, 1, 2, 1, 2, 3, 1) |> as.character(),
                                height =  c(1, 2, 1, 3, 2, 1, 4),
-                               color = rep("goldenrod2", 7))
+                               item = rep("🟨",7))
 
 
 all_fries_table <- data.frame(id_fry = 1:10, 
-                              seconds = c(1, 1, 2, 1, 2, 3, 1, 1,2,3),
+                              seconds = c(1, 1, 2, 1, 2, 3, 1, 1,2,3)  |> as.character(),
                               height =  c(1, 2, 1, 3, 2, 1, 4, 5, 3, 2),
-                              color = c(rep("goldenrod2", 7), 
-                                        rep("darkseagreen4", 3))
+                              item = c(rep("🟨", 7), 
+                                        rep("🟩", 3),
+                              ind_real = c())
                               )
+
+imaginary_fries_table <- all_fries_table |> slice(8:10)
 ```
 
 ``` r
@@ -393,14 +396,22 @@ chart_tile <- function(...){
   )
   
 }
+
+
+set_color <- function(color){
+  
+  aes(fill = I(color |> alpha(.5)) , color = I(color))
+  
+}
 ```
 
 ``` r
 real_fries_table |>
   ggkids() + 
-  use(x = seconds, y = height) + 
-  chart_tile() + 
-  use_color(color |> I())
+  use(x = seconds, 
+      y = height, 
+      picture = item) + 
+  chart_point() 
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
@@ -411,6 +422,28 @@ last_plot() %+% all_fries_table
 ```
 
 <img src="man/figures/README-unnamed-chunk-11-2.png" width="100%" />
+
+``` r
+
+real_fries_table |>
+  ggkids() + 
+  use(x = seconds, y = height) + 
+  chart_tile() + 
+  set_color("goldenrod2")
+```
+
+<img src="man/figures/README-unnamed-chunk-11-3.png" width="100%" />
+
+``` r
+
+last_plot() +
+  chart_tile(
+    data = imaginary_fries_table,
+    set_color("darkseagreen4")
+    )
+```
+
+<img src="man/figures/README-unnamed-chunk-11-4.png" width="100%" />
 
 # A jungle bar chart… ?
 
@@ -472,7 +505,7 @@ ggprop.test:::compute_group_bricks
 #>     data %>% dplyr::mutate(row = row_number()) %>% dplyr::mutate(y = row - 
 #>         0.5) %>% dplyr::mutate(width = width)
 #> }
-#> <bytecode: 0x1677c9170>
+#> <bytecode: 0x13b575428>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
