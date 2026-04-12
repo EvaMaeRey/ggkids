@@ -118,10 +118,11 @@ ggkids(cars) +
 </details>
 
 ```{r, echo = F}
-"ggkids(cars) + 
-  aes(speed, dist) + 
-  geom_point()" |>
-  ggram::ggram(code = _, "Introducing ggkids.")
+"ggkids(mtcars) + 
+  aes(cyl) + 
+  geom_bar() + 
+  labs(title = 'Hello Kids!')" |>
+  ggram::ggram(code = _, "ggkids theme...")
 ```
 
 

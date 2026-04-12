@@ -559,7 +559,7 @@ ggprop.test:::compute_group_bricks
 #>     data %>% dplyr::mutate(row = row_number()) %>% dplyr::mutate(y = row - 
 #>         0.5) %>% dplyr::mutate(width = width)
 #> }
-#> <bytecode: 0x149c63d28>
+#> <bytecode: 0x111d34700>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
