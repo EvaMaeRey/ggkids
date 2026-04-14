@@ -121,8 +121,8 @@ ggkids(cars) +
 "ggkids(mtcars) + 
   aes(cyl) + 
   geom_bar() + 
-  labs(title = 'Hello Kids!')" |>
-  ggram::ggram(code = _, "ggkids theme...")
+  labs(title = 'Hello ggkids!')" |>
+  ggram::ggram(code = _, "ggkids brings it's own theme...")
 ```
 
 
@@ -892,11 +892,13 @@ chart_point_count <- function(...){
 ```{r, echo = F}
 set.seed(12345)
 
-'tribble(~weeks, ~num_coin,
-        0, 1,
-        1, 2,
-        2, 3) |>
-ggkids() +
+'repair_data <- 
+   tribble(~weeks, ~num_coin,
+            0,      1,
+            1,      2,
+            2,      3)
+            
+ggkids(data = repair_data) +
   use_x(weeks) + 
   use_y(num_coins) + 
   chart_point_count() + 
