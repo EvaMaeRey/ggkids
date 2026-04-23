@@ -73,7 +73,7 @@ library(ggplot2)
 theme_kids <- function(...){
   ggplot2::theme_classic(
     paper = "grey98", 
-    ink = "grey25", 
+    ink = "grey30", 
     base_size = 30,
     base_family = "Comic Sans MS") 
 }
@@ -591,7 +591,7 @@ ggprop.test:::compute_group_bricks
 #>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
 #>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x136635bd8>
+#> <bytecode: 0x1359cd698>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 

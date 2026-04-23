@@ -79,7 +79,7 @@ library(ggplot2)
 theme_kids <- function(...){
   ggplot2::theme_classic(
     paper = "grey98", 
-    ink = "grey25", 
+    ink = "grey30", 
     base_size = 30,
     base_family = "Comic Sans MS") 
 }
@@ -369,11 +369,11 @@ pets_data |>
 ```{r, echo = F}
 'pets_data <- 
   record_data(~pets, ~number_of_pets,
-          "🐱",  30, 
-          "🐶",  25, 
-          "🦚",  10, 
-          "🐠",  15, 
-          "🐰",   5)
+              "🐱",  30, 
+              "🐶",  25, 
+              "🦚",  10, 
+              "🐠",  15, 
+              "🐰",   5)
         
 # Then she drew the data ...        
 ggkids(data = pets_data) +
@@ -678,11 +678,11 @@ last_plot() +
 '
 senses_table <- 
   record_data(~order, ~sense, ~reps, 
-          "1st", "👁️", 5,
-          "2nd", "✋", 4,
-          "3rd", "👂", 3,
-          "4th", "👃", 2,
-          "5th", "👅", 1)
+              "1st", "👁️", 5,
+              "2nd", "✋", 4,
+              "3rd", "👂", 3,
+              "4th", "👃", 2,
+              "5th", "👅", 1)
 
 senses_table |> 
   ggkids() + 
@@ -927,9 +927,9 @@ set.seed(12345)
 
 'repair_data <- 
    record_data(~weeks, ~num_coin,
-            0,      1,
-            1,      2,
-            2,      3)
+                0,      1,
+                1,      2,
+                2,      3)
             
 ggkids(data = repair_data) +
   use_x(weeks) + 
