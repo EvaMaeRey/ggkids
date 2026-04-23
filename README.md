@@ -12,6 +12,7 @@ ggkids
 - [Digging Instruments](#digging-instruments)
 - [Outer Space Travel](#outer-space-travel)
 - [Scooter Repair Cost](#scooter-repair-cost)
+  - [Scooter Data](#scooter-data)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -46,10 +47,15 @@ for young learners given a more limited vocabulary and little experience
 interpreting error messages.
 
 0.  the package contains data that let young learners replicate several
-    plots from the new ‘Daphne Draws Data’ book by Storytelling with
-    Data Founder Cole Nussbaumer-Knaflic and illustrator John Skewes, a
-    couple plots from Josh Starmer’s book ‘Norm and ’Squatch Make a New
-    Friend’.
+    plots from the new [‘Daphne Draws
+    Data’](https://www.daphnedrawsdata.com/) book by [Storytelling with
+    Data](https://www.storytellingwithdata.com/) Founder Cole
+    Nussbaumer-Knaflic and illustrator [John
+    Skewes](https://www.amazon.com/stores/author/B001IXS442/about), a
+    couple plots from Josh Starmer’s
+    ([StatQuest](https://statquest.org/)) book [‘Norm and ’Squatch Make
+    a New
+    Friend’](https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK).
 
 1.  `ggkids()` is an alias for `ggplot()`. It can be used to initialized
     the plot and set global data just like `ggplot()`, but `ggkids`
@@ -66,8 +72,8 @@ library(ggplot2)
 #' @export
 theme_kids <- function(...){
   ggplot2::theme_classic(
-    paper = "whitesmoke", 
-    ink = "darkgrey", 
+    paper = "grey98", 
+    ink = "grey25", 
     base_size = 30,
     base_family = "Comic Sans MS") 
 }
@@ -76,6 +82,17 @@ theme_kids <- function(...){
 update_geom_defaults(GeomPoint, aes(size = from_theme(pointsize * 3)))
 
 update_geom_defaults(GeomText, aes(size = from_theme(pointsize * 3)))
+
+#' @export
+label_title <- function(title){labs(title = title)}
+
+#' @export
+label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
+
+#' @export
+label_caption <- function(caption){labs(caption = caption)}
+
+record_data <- function(...){tribble(...)}
 ```
 
 ``` r
@@ -137,10 +154,23 @@ use <- function(color, ...){
 }
 
 #' @export
-use_x <- function(x){list(aes(x = {{x}}))}
+use_x <- function(x){aes(x = {{x}})}
+
+#' @export
+label_x <- function(x){labs(x = x)}
 
 #' @export
 use_y <- function(y){list(aes(y = {{y}}))}
+
+#' @export
+label_y <- function(y){labs(y = y)}
+
+
+#' @export
+label_color <- function(color){labs(fill = color,
+                                    color = color)}
+
+
 
 
 #' @export
@@ -511,8 +541,10 @@ theme_chart_bar <- function(){
   }
 
 chart_bar <- function(...){
-  list(geom_col(...), 
-       theme_chart_bar(),
+  list(theme_chart_bar(),
+       geom_label(vjust = 0, aes(label = after_stat(y), fill = NULL),
+                  linewidth = 0), 
+       geom_col(...), 
        scale_y_continuous(expand = expansion(c(0, .3))),
        labs(x = NULL))
 }
@@ -556,10 +588,10 @@ chart_item_stack <- function(...){
 ggprop.test:::compute_group_bricks
 #> function (data, scales, width = 0.2) 
 #> {
-#>     data %>% dplyr::mutate(row = row_number()) %>% dplyr::mutate(y = row - 
-#>         0.5) %>% dplyr::mutate(width = width)
+#>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
+#>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x1473ac8e8>
+#> <bytecode: 0x136635bd8>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
@@ -613,16 +645,6 @@ all_fries_table <- data.frame(id_fry = 1:10,
 ```
 
 </details>
-
-``` r
-'ggkids(jungle_table) + 
-  encode(x = tree,
-      y = num_bunches) + 
-  chart_bar() +
-  set_color("lemonchiffon2")' |>
-  ggram::ggram(code = _, 
-               title = "chart_bar in ggkids")
-```
 
 <img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
 
@@ -722,6 +744,8 @@ stamp_hline <- function(y = .5, linetype = "dashed", ...){
 # Scooter Repair Cost
 
 <details>
+
+### Scooter Data
 
 ``` r
 weeks <- c(0,1,2)

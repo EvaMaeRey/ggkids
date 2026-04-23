@@ -62,7 +62,7 @@ ggkids is about bringing the grammar of graphics and ggplot2 to very young learn
 ggplot2 is quite logical and accessible, but may present some challenges for young learners given a more limited vocabulary and little experience interpreting error messages. 
 
 
-0. the package contains data that let young learners replicate several plots from the new 'Daphne Draws Data' book by Storytelling with Data Founder Cole Nussbaumer-Knaflic and illustrator John Skewes, a couple plots from Josh Starmer's book 'Norm and 'Squatch Make a New Friend'.
+0. the package contains data that let young learners replicate several plots from the new ['Daphne Draws Data']( https://www.daphnedrawsdata.com/) book by [Storytelling with Data](https://www.storytellingwithdata.com/) Founder Cole Nussbaumer-Knaflic and illustrator [John Skewes](https://www.amazon.com/stores/author/B001IXS442/about), a couple plots from Josh Starmer's ([StatQuest](https://statquest.org/)) book ['Norm and 'Squatch Make a New Friend'](https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK).
 
 
 1. `ggkids()` is an alias for `ggplot()`.  It can be used to initialized the plot and set global data just like `ggplot()`, but `ggkids` might be preferred if you want to more strongly signal 'this version is just for you, kiddos!'. But brings along it's own theme. 
@@ -78,8 +78,8 @@ library(ggplot2)
 #' @export
 theme_kids <- function(...){
   ggplot2::theme_classic(
-    paper = "whitesmoke", 
-    ink = "darkgrey", 
+    paper = "grey98", 
+    ink = "grey25", 
     base_size = 30,
     base_family = "Comic Sans MS") 
 }
@@ -89,6 +89,16 @@ update_geom_defaults(GeomPoint, aes(size = from_theme(pointsize * 3)))
 
 update_geom_defaults(GeomText, aes(size = from_theme(pointsize * 3)))
 
+#' @export
+label_title <- function(title){labs(title = title)}
+
+#' @export
+label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
+
+#' @export
+label_caption <- function(caption){labs(caption = caption)}
+
+record_data <- function(...){tribble(...)}
 ```
 
 
@@ -121,8 +131,10 @@ ggkids(cars) +
 "ggkids(mtcars) + 
   aes(cyl) + 
   geom_bar() + 
-  labs(title = 'Hello ggkids!')" |>
+  label_title('Hello ggkids!')" |>
   ggram::ggram(code = _, "ggkids brings it's own theme...")
+
+
 ```
 
 
@@ -150,10 +162,23 @@ use <- function(color, ...){
 }
 
 #' @export
-use_x <- function(x){list(aes(x = {{x}}))}
+use_x <- function(x){aes(x = {{x}})}
+
+#' @export
+label_x <- function(x){labs(x = x)}
 
 #' @export
 use_y <- function(y){list(aes(y = {{y}}))}
+
+#' @export
+label_y <- function(y){labs(y = y)}
+
+
+#' @export
+label_color <- function(color){labs(fill = color,
+                                    color = color)}
+
+
 
 
 #' @export
@@ -322,6 +347,8 @@ pets_data <- data.frame(pets = c("🐱", "🐶", "🦚", "🐠", "🐰"),
 
 usethis::use_data(pets_data, overwrite = T)
 
+
+
 ```
 
 
@@ -341,7 +368,7 @@ pets_data |>
 
 ```{r, echo = F}
 'pets_data <- 
-  tribble(~pets, ~number_of_pets,
+  record_data(~pets, ~number_of_pets,
           "🐱",  30, 
           "🐶",  25, 
           "🦚",  10, 
@@ -443,8 +470,8 @@ ocean_table |>
   use_picture(type) + 
   use_size(size) + 
   chart_fit_global_line() + 
-  labs(x = 'little         big') +
-  labs(y = 'slow           fast')" |>
+  label_x('little         big') +
+  label_y('slow           fast')" |>
 ggram::ggram(code = _, "Are crabs 🦀🦀🦀 faster than shrimp 🦐🦐🦐?",
              subtitle = "Size explains speed", widths = c(1, 1.6))
 ```
@@ -557,8 +584,10 @@ theme_chart_bar <- function(){
   }
 
 chart_bar <- function(...){
-  list(geom_col(...), 
-       theme_chart_bar(),
+  list(theme_chart_bar(),
+       geom_label(vjust = 0, aes(label = after_stat(y), fill = NULL),
+                  linewidth = 0), 
+       geom_col(...), 
        scale_y_continuous(expand = expansion(c(0, .3))),
        labs(x = NULL))
 }
@@ -616,12 +645,14 @@ jungle_table |>
 ```{r, include = F}
 '
 jungle_table <- 
-  tribble(~tree, ~num_bunches, 
-          "🌴#1", 2,
-          "🌴#2", 5,
-          "🌴#3", 1,
-          "🌴#4", 2,
-          "🌴#5", 1)
+  record_data(
+    ~tree, ~num_bunches, 
+    "🌴#1", 2,
+    "🌴#2", 5,
+    "🌴#3", 1,
+    "🌴#4", 2,
+    "🌴#5", 1
+    )
 
 jungle_table |> 
   ggkids() + 
@@ -646,7 +677,7 @@ last_plot() +
 ```{r, echo = F}
 '
 senses_table <- 
-  tribble(~order, ~sense, ~reps, 
+  record_data(~order, ~sense, ~reps, 
           "1st", "👁️", 5,
           "2nd", "✋", 4,
           "3rd", "👂", 3,
@@ -692,7 +723,7 @@ all_fries_table <- data.frame(id_fry = 1:10,
 
 
 
-```{r}
+```{r, echo = F}
 'ggkids(jungle_table) + 
   encode(x = tree,
       y = num_bunches) + 
@@ -742,7 +773,7 @@ usethis::use_data(polar_bear_table, overwrite = T)
 
 
 ```{r, echo = F}
-'tribble(~id_bear, ~depth,
+'record_data(~id_bear, ~depth,
             "🐻‍❄#1",    3,
             "🐻‍❄#2",    5,
             "🐻‍❄#3",    4,
@@ -793,8 +824,8 @@ digging_table <- fork_and_spoon_table |>
   # use_group() +
   chart_point() + 
   use_picture(type) +
-  labs(x = "⏱️ (minutes)",
-       y = "Number of Tunnels")' |>
+  label_x("⏱️ (minutes)") + 
+  label_y("Number of Tunnels")' |>
   ggram::ggram(code = _, title = "What's the best for digging")
 ```
 
@@ -851,6 +882,8 @@ ggkids() +
 
 <details>
 
+### Scooter Data
+
 ```{r}
 weeks <- c(0,1,2)
 num_coins <- c(1,2,3)
@@ -893,7 +926,7 @@ chart_point_count <- function(...){
 set.seed(12345)
 
 'repair_data <- 
-   tribble(~weeks, ~num_coin,
+   record_data(~weeks, ~num_coin,
             0,      1,
             1,      2,
             2,      3)
