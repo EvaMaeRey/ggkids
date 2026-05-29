@@ -12,7 +12,7 @@ ggkids
 - [Digging Instruments](#digging-instruments)
 - [Outer Space Travel](#outer-space-travel)
 - [Scooter Repair Cost](#scooter-repair-cost)
-  - [Scooter Data](#scooter-data)
+- [Minimal Packaging](#minimal-packaging)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
@@ -92,7 +92,7 @@ label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
 #' @export
 label_caption <- function(caption){labs(caption = caption)}
 
-record_data <- function(...){tribble(...)}
+write_table <- function(...){tribble(...)}
 ```
 
 ``` r
@@ -149,7 +149,7 @@ encode <- function(color, ...){
 }
 
 #' @export
-use <- function(color, ...){
+viz <- function(color, ...){
   aes(color = {{color}}, fill = {{color}}, ...) 
 }
 
@@ -236,18 +236,21 @@ use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shap
     default might be more useful than reading an error message for very
     young learners. 🚧 *This is done using the helper function,
     `aes_default`. *
+
 5.  New `picture` aesthetic will play more of a role - because kids love
     pictures, and faces, etc. `stamp_picture()` is lets you add an
     annotation layer in an arbitrary place on your plot,
     e.g. `stamp_picture(🚀, x = 4, y = 10)` - position default is the
     middle of the plot, i.e. `x = I(.5), y = I(.5)` and picture default
     is a classic smiley 🙂.
+
 6.  We introduce `chart_*()` series which can be used similar to layer
     functions (`geom_*` and `stat_*`), however they bring defaults that
     are appropriate for the chart type in question,
     e.g. `chart_plunging_bar()` wraps up `geom_bar(stat = "identity")`
     with `scale_y_reverse()`. Available chart functions: `chart_bar`,
     `chart_item_stack`
+
 7.  Some of the chart functions are supported with new Stats, which are
     StatItemStack, StatPointCount,
 
@@ -336,16 +339,16 @@ chart_pie <- function(...){
 ```
 
 ``` r
-pets_data <- data.frame(pets = c("🐱", "🐶", "🦚", "🐠", "🐰"), 
+pets_table <- data.frame(pets = c("🐱", "🐶", "🦚", "🐠", "🐰"), 
                    number_of_pets = c(30, 25, 10, 15, 5)) |> 
   mutate(pets = fct_infreq(pets, number_of_pets) |> fct_rev())
 
 
-usethis::use_data(pets_data, overwrite = T)
+usethis::use_data(pets_table, overwrite = T)
 ```
 
 ``` r
-pets_data
+pets_table
 #>   pets number_of_pets
 #> 1   🐱             30
 #> 2   🐶             25
@@ -353,7 +356,7 @@ pets_data
 #> 4   🐠             15
 #> 5   🐰              5
 
-pets_data |> 
+pets_table |> 
   ggplot() +
   chart_pie() +
   use_color(pets) + 
@@ -492,29 +495,14 @@ real_fries_table |>
       y = height, 
       picture = item) + 
   chart_point() 
-```
-
-<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
-
-``` r
 
 last_plot() %+% all_fries_table
-```
-
-<img src="man/figures/README-unnamed-chunk-15-2.png" width="100%" />
-
-``` r
 
 real_fries_table |>
   ggkids() + 
   use(x = seconds, y = height) + 
   chart_tile() + 
   set_color("goldenrod2")
-```
-
-<img src="man/figures/README-unnamed-chunk-15-3.png" width="100%" />
-
-``` r
 
 last_plot() +
   chart_tile(
@@ -522,8 +510,6 @@ last_plot() +
     set_color("darkseagreen4")
     )
 ```
-
-<img src="man/figures/README-unnamed-chunk-15-4.png" width="100%" />
 
 </details>
 
@@ -591,7 +577,7 @@ ggprop.test:::compute_group_bricks
 #>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
 #>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x1359cd698>
+#> <bytecode: 0x14ccaf158>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
@@ -745,8 +731,6 @@ stamp_hline <- function(y = .5, linetype = "dashed", ...){
 
 <details>
 
-### Scooter Data
-
 ``` r
 weeks <- c(0,1,2)
 num_coins <- c(1,2,3)
@@ -794,3 +778,9 @@ chart_point_count <- function(...){
 </details>
 
 <img src="man/figures/README-unnamed-chunk-30-1.png" width="100%" />
+
+# Minimal Packaging
+
+``` r
+# knitrExtra::chunk()
+```
