@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
+
 <!-- badges: end -->
 
 Work builds on [2025-01-28-ggkids](https://evamaerey.github.io/mytidytuesday/2025-01-28-ggkids/ggkids.html) and [daphne](https://github.com/EvaMaeRey/daphne) package (now depricated).
@@ -34,7 +35,6 @@ pak::pak("EvaMaeRey/ggkids")
 ```
 
 ## Example
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -54,34 +54,32 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-
-
 ggkids is about bringing the grammar of graphics and ggplot2 to very young learners.
 
-ggplot2 is quite logical and accessible, but may present some challenges for young learners given a more limited vocabulary and little experience interpreting error messages. 
+ggplot2 is quite logical and accessible, but may present some challenges for young learners given a more limited vocabulary and little experience interpreting error messages.
 
+0.  the package contains data that let young learners replicate several plots from the new ['Daphne Draws Data'](https://www.daphnedrawsdata.com/) book by [Storytelling with Data](https://www.storytellingwithdata.com/) Founder Cole Nussbaumer-Knaflic and illustrator [John Skewes](https://www.amazon.com/stores/author/B001IXS442/about), a couple plots from Josh Starmer's ([StatQuest](https://statquest.org/)) book ['Norm and 'Squatch Make a New Friend'](https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK).
 
-0. the package contains data that let young learners replicate several plots from the new ['Daphne Draws Data']( https://www.daphnedrawsdata.com/) book by [Storytelling with Data](https://www.storytellingwithdata.com/) Founder Cole Nussbaumer-Knaflic and illustrator [John Skewes](https://www.amazon.com/stores/author/B001IXS442/about), a couple plots from Josh Starmer's ([StatQuest](https://statquest.org/)) book ['Norm and 'Squatch Make a New Friend'](https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK).
-
-
-1. `ggkids()` is an alias for `ggplot()`.  It can be used to initialized the plot and set global data just like `ggplot()`, but `ggkids` might be preferred if you want to more strongly signal 'this version is just for you, kiddos!'. But brings along it's own theme. 
+1.  `ggkids()` is an alias for `ggplot()`. It can be used to initialized the plot and set global data just like `ggplot()`, but `ggkids` might be preferred if you want to more strongly signal 'this version is just for you, kiddos!'. But brings along it's own theme.
 
 ```{r}
+library(tidyverse)
 library(ggplot2)
 ```
 
 <details>
 
-
 ```{r theme_kids}
 #' @export
-theme_kids <- function(...){
-  ggplot2::theme_classic(
-    paper = "grey98", 
+theme_kids <- function(paper = "grey98", 
     ink = "grey30", 
     base_size = 30,
-    base_family = "Comic Sans MS") 
+    base_family = "Comic Sans MS", ...){
+  ggplot2::theme_classic(paper = paper, 
+                         ink = ink, 
+                         base_size = base_size, 
+                         base_family = base_family, ...
+    ) 
 }
 
 # todo... move to theme
@@ -98,9 +96,16 @@ label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
 #' @export
 label_caption <- function(caption){labs(caption = caption)}
 
-write_table <- function(...){tribble(...)}
-```
 
+write_table <- function(...){tribble(...) |> mutate(across(where(is.character), forcats::fct_inorder))}
+
+# write_table(~pets, ~number_of_pets,
+#               "🐱",  30,
+#               "🐶",  25,
+#               "🦚",  10,
+#               "🐠",  15,
+#               "🐰",   5)
+```
 
 ```{r}
 ggplot(cars) + 
@@ -137,18 +142,11 @@ ggkids(cars) +
 
 ```
 
+2.  `use` is an alias for `aes`, since 'aesthetic' is unlikely to be in the vocabulary of young learners. We think that you might say 'let's use color to communicate about height' (use the color aesthetic channel to communicate about 'var1') or 'use size' might be a natural way to talk about aesthetic mapping with children.
 
-
-
-
-
-2. `use` is an alias for `aes`, since 'aesthetic' is unlikely to be in the vocabulary of young learners.  We think that you might say 'let's use color to communicate about height' (use the color aesthetic channel to communicate about 'var1') or 'use size' might be a natural way to talk about aesthetic mapping with children.
-
-
-3. A series of `use_*()` functions are also available and facilitate more step-wise plot construction, e.g. `use_x()`, `use_y()`, `use_size()`, `use_linewidth()`  🚧 *One thing people struggle with including me is the color aesthetic.  It sometimes feels like fill might better be called color, and color something (outline_color?); If this is done using open point (shape = 21), would probably be the way to go too.*
+3.  A series of `use_*()` functions are also available and facilitate more step-wise plot construction, e.g. `use_x()`, `use_y()`, `use_size()`, `use_linewidth()` 🚧 *One thing people struggle with including me is the color aesthetic. It sometimes feels like fill might better be called color, and color something (outline_color?); If this is done using open point (shape = 21), would probably be the way to go too.*
 
 <details>
-
 
 ```{r aes_to_use}
 #' @export
@@ -208,6 +206,10 @@ use_shape <- function(shape){aes(shape = {{shape}})}
 #' @export
 use_color <- function(color){aes(fill = {{color}})}
 
+
+#' @export
+use_group <- function(group){aes(group = {{group}})}
+
 #' @export
 use_color_line <- function(color){aes(color = {{color}})}
 
@@ -238,19 +240,15 @@ use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shap
 
 </details>
 
+4.  More aesthetic defaults are provided, rather than required for layer rendering. e.g. to add a point layer, `x` and `y` are not required, but instead default to zero. We think inspecting a plot with a zero default might be more useful than reading an error message for very young learners. 🚧 *This is done using the helper function, `aes_default`.*
 
-4. More aesthetic defaults are provided, rather than required for layer rendering.  e.g. to add a point layer, `x` and `y` are not required, but instead default to zero. We think inspecting a plot with a zero default might be more useful than reading an error message for very young learners.  🚧 *This is done using the helper function, `aes_default`. *
+5.  New `picture` aesthetic will play more of a role - because kids love pictures, and faces, etc. `stamp_picture()` is lets you add an annotation layer in an arbitrary place on your plot, e.g. `stamp_picture(🚀, x = 4, y = 10)` - position default is the middle of the plot, i.e. `x = I(.5), y = I(.5)` and picture default is a classic smiley 🙂.
 
-5. New `picture` aesthetic will play more of a role - because kids love pictures, and faces, etc.   `stamp_picture()` is lets you add an annotation layer in an arbitrary place on your plot, e.g. `stamp_picture(🚀, x = 4, y = 10)` - position default is the middle of the plot, i.e. `x = I(.5), y = I(.5)` and picture default is a classic smiley  🙂.
+6.  We introduce `chart_*()` series which can be used similar to layer functions (`geom_*` and `stat_*`), however they bring defaults that are appropriate for the chart type in question, e.g. `chart_plunging_bar()` wraps up `geom_bar(stat = "identity")` with `scale_y_reverse()`. Available chart functions: `chart_bar`, `chart_item_stack`
 
-5. We introduce `chart_*()` series which can be used similar to layer functions (`geom_*` and `stat_*`), however they bring defaults that are appropriate for the chart type in question, e.g. `chart_plunging_bar()` wraps up `geom_bar(stat = "identity")` with `scale_y_reverse()`.  Available chart functions: `chart_bar`, `chart_item_stack`
-
-6. Some of the chart functions are supported with new Stats, which are StatItemStack, StatPointCount, 
-
-
+7.  Some of the chart functions are supported with new Stats, which are StatItemStack, StatPointCount,
 
 <details>
-
 
 ```{r}
 library(statexpress)
@@ -284,9 +282,6 @@ ggplot_add.aes_default <- function(object, plot, object_name) {
 }
 
 ```
-
-
-
 
 ```{r}
 #' @export
@@ -339,9 +334,6 @@ chart_pie <- function(...){
 }
 ```
 
-
-
-
 ```{r}
 pets_table <- data.frame(pets = c("🐱", "🐶", "🦚", "🐠", "🐰"), 
                    number_of_pets = c(30, 25, 10, 15, 5)) |> 
@@ -354,8 +346,6 @@ usethis::use_data(pets_table, overwrite = T)
 
 ```
 
-
-
 ```{r}
 pets_table
 
@@ -366,17 +356,17 @@ pets_table |>
   use_area(number_of_pets)
 ```
 
-
 </details>
 
 ```{r, echo = F}
 'pets_table <- 
   write_table(~pets, ~number_of_pets,
-              "🐱",  30, 
-              "🐶",  25, 
+              "🐰",   5,
               "🦚",  10, 
               "🐠",  15, 
-              "🐰",   5)
+              "🐶",  25, 
+              "🐱",  30
+              )
         
 # Then she drew the data ...        
 ggkids(data = pets_table) +
@@ -392,12 +382,9 @@ ggram::ggram("Daphne🐲📊 tabulates the data and draws the data!",
 
 ```
 
-
-
 # Crustaceans Race
 
 <details>
-
 
 ```{r crustaceans}
 library(tidyverse)
@@ -411,7 +398,6 @@ ocean_table <- cars |>
     rep("🦀", 20))) |>
   sample_frac()
 ```
-
 
 ```{r GeomPointFill}
 #' @export
@@ -446,9 +432,6 @@ chart_fit_global_line <- function(...){
 use_picture <- function(picture){aes(shape = I({{picture}}))}
 ```
 
-
-
-
 ```{r}
 head(ocean_table)
 
@@ -464,7 +447,6 @@ ocean_table |>
 
 </details>
 
-
 ```{r, echo = F}
 "ggkids(ocean_table) + 
   use_y(speed) +
@@ -473,21 +455,17 @@ ocean_table |>
   use_picture(type) + 
   use_size(size) + 
   chart_fit_global_line() + 
-  label_x('little         big') +
-  label_y('slow           fast')" |>
+  label_x('little  ↔ big') +
+  label_y('slow      ↔     fast')" |>
 ggram::ggram(code = _, "Are crabs 🦀🦀🦀 faster than shrimp 🦐🦐🦐?",
              subtitle = "Size explains speed", widths = c(1, 1.6))
 ```
-
-
-
 
 # Fry Eating Contest
 
 (Norm and 'Squatch Make a New Friend - Joshua Starmer)
 
 <details>
-
 
 ```{r}
 real_fries_table <- data.frame(id_fry = 1:7, 
@@ -506,7 +484,6 @@ all_fries_table <- data.frame(id_fry = 1:10,
 
 imaginary_fries_table <- all_fries_table |> slice(8:10)
 ```
-
 
 ```{r}
 chart_tile <- function(...){
@@ -528,11 +505,10 @@ set_color <- function(color){
 
 ```
 
-
-```{r, eval = F}
+```{r, eval = T}
 real_fries_table |>
   ggkids() + 
-  use(x = seconds, 
+  encode(x = seconds, 
       y = height, 
       picture = item) + 
   chart_point() 
@@ -541,7 +517,7 @@ last_plot() %+% all_fries_table
 
 real_fries_table |>
   ggkids() + 
-  use(x = seconds, y = height) + 
+  encode(x = seconds, y = height) + 
   chart_tile() + 
   set_color("goldenrod2")
 
@@ -552,11 +528,9 @@ last_plot() +
     )
 ```
 
-
 </details>
 
-
-```{r, echo = F}
+```{r, echo = T}
 'real_fries_table |>
   ggkids() + 
   use_x(seconds) + 
@@ -571,13 +545,9 @@ last_plot() +
 
 ```
 
-
-
-
 # Bananas Gone Missing
 
 <details>
-
 
 ```{r jungle_table}
 theme_chart_bar <- function(){
@@ -644,7 +614,6 @@ jungle_table |>
 
 </details>
 
-
 ```{r, include = F}
 '
 jungle_table <- 
@@ -677,7 +646,7 @@ last_plot() +
 
 # See, Touch, Hear, Smell, Taste
 
-```{r, echo = F}
+```{r, echo = F, eval = F}
 '
 senses_table <- 
   write_table(~order, ~sense, ~reps, 
@@ -701,7 +670,6 @@ ggram::ggram(code = _, widths = c(1,1.6))
 
 <details>
 
-
 ```{r}
 
 real_fries_table <- data.frame(id_fry = 1:7, 
@@ -721,10 +689,7 @@ all_fries_table <- data.frame(id_fry = 1:10,
 #             )  
 ```
 
-
 </details>
-
-
 
 ```{r, echo = F}
 'ggkids(jungle_table) + 
@@ -738,14 +703,9 @@ all_fries_table <- data.frame(id_fry = 1:10,
 
 ```
 
-
-
-
 # Polar Bears Dive
 
-
 <details>
-
 
 ```{r}
 chart_bar_plunging <- function(...){
@@ -760,7 +720,6 @@ chart_bar_plunging <- function(...){
 }
 ```
 
-
 ```{r}
 bears <- paste0("🐻‍❄️ #", 1:5)
 depth <- c(3,5,4,6,5)
@@ -771,9 +730,7 @@ usethis::use_data(polar_bear_table, overwrite = T)
 
 ```
 
-
 </details>
-
 
 ```{r, echo = F}
 'write_table(~id_bear, ~depth,
@@ -794,9 +751,7 @@ ggkids() +
 
 # Digging Instruments
 
-
 <details>
-
 
 ```{r}
 time <- c(0, 15, 30, 45, 60)
@@ -807,15 +762,19 @@ shovel_and_bucket_table <- data_frame(time, num_tunnels = num_tunnels * 2, type 
 
 paws_table <- data_frame(time, num_tunnels = num_tunnels * 3, type = "🐾")
 
-chart_line <- geom_line
+chart_line <- function(...){
+  
+  list(geom_line(...), 
+       aes_default(aes(group = 1))
+       )
+  
+}
+  
 
 digging_table <- fork_and_spoon_table |>
   bind_rows(shovel_and_bucket_table) |>
   bind_rows(paws_table)
 ```
-
-
-
 
 </details>
 
@@ -824,15 +783,13 @@ digging_table <- fork_and_spoon_table |>
   use_x(time) + 
   use_y(num_tunnels) + 
   chart_line() +
-  # use_group() +
+  use_group(type) +
   chart_point() + 
   use_picture(type) +
   label_x("⏱️ (minutes)") + 
   label_y("Number of Tunnels")' |>
   ggram::ggram(code = _, title = "What's the best for digging")
 ```
-
-
 
 # Outer Space Travel
 
@@ -885,7 +842,6 @@ ggkids() +
 
 <details>
 
-
 ```{r}
 weeks <- c(0,1,2)
 num_coins <- c(1,2,3)
@@ -895,7 +851,6 @@ scooter_table <- tibble(weeks, num_coins, coin)
 
 usethis::use_data(scooter_table, overwrite = T)
 ```
-
 
 ```{r}
 compute_panel_count <- function(data, scales){
@@ -924,6 +879,7 @@ chart_point_count <- function(...){
 
 </details>
 
+
 ```{r, echo = F}
 set.seed(12345)
 
@@ -948,6 +904,103 @@ ggkids(data = repair_data) +
   ggram::ggram(code = _, title = "Declan saves to repair his scooter")
 
 ```
+
+# Mood Repair
+
+![](images/clipboard-2663306703.png)
+
+
+
+
+> My 5-year-old was really excited to show me the graph that she made. It warmed my heart.\
+> \
+> Not only does she already understand the need for evidence-based approaches for managing wellbeing, but she also appreciates the importance of tracking processes longitudinally and examining change over time.\
+> \
+> Next on the agenda is a discussion of the difference between correlation and causation.\
+> \
+> Stayed tuned. [**Tim Ballard, PhD**](https://www.linkedin.com/in/tim-ballard-phd-ba8ba625/)
+
+```{r, echo = F}
+set.seed(12345)
+
+'repair_data <- 
+   write_table(~days, ~feeling,
+                1,      "😩",
+                2,      "😞",
+                3,      "😕",
+                4,      "😐",
+                5,      "😏",
+                6,      "😊",
+                7,      "😁")
+                
+ggkids(data = repair_data) +
+  use_x(days) + 
+  use_y(feeling) + 
+  chart_point() + 
+  chart_line()' |> 
+  ggram::ggram(code = _, title = "Tim Ballard's daughter's mood improves over 7 days! 😃")
+
+
+
+```
+
+# Clothing count & temp variation
+
+![](images/clipboard-4008049403.png)
+
+I’ve taught data visualization to hundreds of professionals (soon to be thousands!) but I was not prepared for how fun it would be to teach my 5-year-old.\
+\
+I’ve been eagerly waiting to read Daphne Draws Data with him – a children’s book within the storytelling with data series – until he was old enough. \
+\
+We read it before bed, and then proceeded to stay up 45 minutes past bedtime because he wanted to draw his own bar charts and line charts (for real, this isn’t one of those made-for-LinkedIn stories).\
+\
+And I gotta say, while I’m always proud of all my students, I do now officially have a favorite \
+\
+If you have a little one in your life between the ages of 5 and 10, this is the best \$12 I’ve spent in a long time: [**https://amzn.to/3Q7GEwb**](https://www.linkedin.com/safety/go/?url=https%3A%2F%2Famzn%2Eto%2F3Q7GEwb&urlhash=Rjhi&mt=OH7VqbmZQV7Wr5SftIwT1dw3X0g1MQ_jtoJRT7JwwHrQsRjLBE7FTS8NpKCaylxLHGsx7QsmHgbsKCHeBTVu8WQDvrpq5VT8sgs_hSndXXu8I2gNu9ShnJHI&isSdui=true)
+
+https://www.linkedin.com/in/morgandepenbusch/
+
+```{r}
+'clothes_data <- 
+   write_table(~clothing, ~num_items,
+                "🩲",      3,
+                "👕",      6,
+                "👖",      5)
+                
+ggkids(data = clothes_data) +
+  use_x(clothing) + 
+  use_y(num_items) + 
+  chart_bar() + 
+  theme_kids(ink = "deepskyblue2")' |> 
+  ggram::ggram(code = _, title = "A cool kid's clothes chart! 😃")
+
+
+'temps_data <- write_table(~time, ~temp,
+                  "6am\\n🌞", 60, 
+                  "8am",      70,
+                 "10am",      80,
+                 "12pm",      82,
+                  "2pm",      84,
+                  "4pm",      80,
+                  "6pm",      78,
+                  "8pm",      70,
+                 "10pm\\n🌜", 65)
+                
+ggkids(data = temps_data) +
+  use_x(time) + 
+  use_y(temp) + 
+  chart_point() + 
+  chart_line() + 
+  set_color("black") +
+  theme_kids(ink = "red3", 
+             base_size = 16) + 
+  stamp_picture("🌞", x = .8 |> I(), y = .9 |> I(),
+  size = 20)' |> 
+  ggram::ggram(code = _, title = "A cool kid's temperatures chart! 🥵😃")
+
+
+```
+
 
 
 # Minimal Packaging

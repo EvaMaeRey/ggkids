@@ -12,6 +12,8 @@ ggkids
 - [Digging Instruments](#digging-instruments)
 - [Outer Space Travel](#outer-space-travel)
 - [Scooter Repair Cost](#scooter-repair-cost)
+- [Mood Repair](#mood-repair)
+- [Clothing count & temp variation](#clothing-count--temp-variation)
 - [Minimal Packaging](#minimal-packaging)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -63,6 +65,7 @@ interpreting error messages.
     is just for you, kiddos!’. But brings along it’s own theme.
 
 ``` r
+library(tidyverse)
 library(ggplot2)
 ```
 
@@ -70,12 +73,15 @@ library(ggplot2)
 
 ``` r
 #' @export
-theme_kids <- function(...){
-  ggplot2::theme_classic(
-    paper = "grey98", 
+theme_kids <- function(paper = "grey98", 
     ink = "grey30", 
     base_size = 30,
-    base_family = "Comic Sans MS") 
+    base_family = "Comic Sans MS", ...){
+  ggplot2::theme_classic(paper = paper, 
+                         ink = ink, 
+                         base_size = base_size, 
+                         base_family = base_family, ...
+    ) 
 }
 
 # todo... move to theme
@@ -92,7 +98,15 @@ label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
 #' @export
 label_caption <- function(caption){labs(caption = caption)}
 
-write_table <- function(...){tribble(...)}
+
+write_table <- function(...){tribble(...) |> mutate(across(where(is.character), forcats::fct_inorder))}
+
+# write_table(~pets, ~number_of_pets,
+#               "🐱",  30,
+#               "🐶",  25,
+#               "🦚",  10,
+#               "🐠",  15,
+#               "🐰",   5)
 ```
 
 ``` r
@@ -200,6 +214,10 @@ use_shape <- function(shape){aes(shape = {{shape}})}
 #' @export
 use_color <- function(color){aes(fill = {{color}})}
 
+
+#' @export
+use_group <- function(group){aes(group = {{group}})}
+
 #' @export
 use_color_line <- function(color){aes(color = {{color}})}
 
@@ -235,7 +253,7 @@ use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shap
     but instead default to zero. We think inspecting a plot with a zero
     default might be more useful than reading an error message for very
     young learners. 🚧 *This is done using the helper function,
-    `aes_default`. *
+    `aes_default`.*
 
 5.  New `picture` aesthetic will play more of a role - because kids love
     pictures, and faces, etc. `stamp_picture()` is lets you add an
@@ -491,18 +509,33 @@ set_color <- function(color){
 ``` r
 real_fries_table |>
   ggkids() + 
-  use(x = seconds, 
+  encode(x = seconds, 
       y = height, 
       picture = item) + 
   chart_point() 
+```
+
+<img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
+
+``` r
 
 last_plot() %+% all_fries_table
+```
+
+<img src="man/figures/README-unnamed-chunk-15-2.png" width="100%" />
+
+``` r
 
 real_fries_table |>
   ggkids() + 
-  use(x = seconds, y = height) + 
+  encode(x = seconds, y = height) + 
   chart_tile() + 
   set_color("goldenrod2")
+```
+
+<img src="man/figures/README-unnamed-chunk-15-3.png" width="100%" />
+
+``` r
 
 last_plot() +
   chart_tile(
@@ -511,7 +544,23 @@ last_plot() +
     )
 ```
 
+<img src="man/figures/README-unnamed-chunk-15-4.png" width="100%" />
+
 </details>
+
+``` r
+'real_fries_table |>
+  ggkids() + 
+  use_x(seconds) + 
+  use_y(height) + 
+  chart_tile() + 
+  set_color("goldenrod2") +
+  chart_tile(
+    data = imaginary_fries_table,
+    set_color("darkseagreen4")
+    )' |> 
+  ggram::ggram(code = _, title = "Norm and Squatch and the Fry Eathing Contest")
+```
 
 <img src="man/figures/README-unnamed-chunk-16-1.png" width="100%" />
 
@@ -577,7 +626,7 @@ ggprop.test:::compute_group_bricks
 #>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
 #>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x14ccaf158>
+#> <bytecode: 0x128636a90>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
@@ -606,8 +655,6 @@ jungle_table |>
 <img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
 
 # See, Touch, Hear, Smell, Taste
-
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 <details>
 
@@ -677,7 +724,14 @@ shovel_and_bucket_table <- data_frame(time, num_tunnels = num_tunnels * 2, type 
 
 paws_table <- data_frame(time, num_tunnels = num_tunnels * 3, type = "🐾")
 
-chart_line <- geom_line
+chart_line <- function(...){
+  
+  list(geom_line(...), 
+       aes_default(aes(group = 1))
+       )
+  
+}
+  
 
 digging_table <- fork_and_spoon_table |>
   bind_rows(shovel_and_bucket_table) |>
@@ -778,6 +832,97 @@ chart_point_count <- function(...){
 </details>
 
 <img src="man/figures/README-unnamed-chunk-30-1.png" width="100%" />
+
+# Mood Repair
+
+![](images/clipboard-2663306703.png)
+
+> My 5-year-old was really excited to show me the graph that she made.
+> It warmed my heart.  
+>   
+> Not only does she already understand the need for evidence-based
+> approaches for managing wellbeing, but she also appreciates the
+> importance of tracking processes longitudinally and examining change
+> over time.  
+>   
+> Next on the agenda is a discussion of the difference between
+> correlation and causation.  
+>   
+> Stayed tuned. [**Tim Ballard,
+> PhD**](https://www.linkedin.com/in/tim-ballard-phd-ba8ba625/)
+
+<img src="man/figures/README-unnamed-chunk-31-1.png" width="100%" />
+
+# Clothing count & temp variation
+
+![](images/clipboard-4008049403.png)
+
+I’ve taught data visualization to hundreds of professionals (soon to be
+thousands!) but I was not prepared for how fun it would be to teach my
+5-year-old.  
+  
+I’ve been eagerly waiting to read Daphne Draws Data with him – a
+children’s book within the storytelling with data series – until he was
+old enough.  
+  
+We read it before bed, and then proceeded to stay up 45 minutes past
+bedtime because he wanted to draw his own bar charts and line charts
+(for real, this isn’t one of those made-for-LinkedIn stories).  
+  
+And I gotta say, while I’m always proud of all my students, I do now
+officially have a favorite  
+  
+If you have a little one in your life between the ages of 5 and 10, this
+is the best \$12 I’ve spent in a long time:
+[**https://amzn.to/3Q7GEwb**](https://www.linkedin.com/safety/go/?url=https%3A%2F%2Famzn%2Eto%2F3Q7GEwb&urlhash=Rjhi&mt=OH7VqbmZQV7Wr5SftIwT1dw3X0g1MQ_jtoJRT7JwwHrQsRjLBE7FTS8NpKCaylxLHGsx7QsmHgbsKCHeBTVu8WQDvrpq5VT8sgs_hSndXXu8I2gNu9ShnJHI&isSdui=true)
+
+<https://www.linkedin.com/in/morgandepenbusch/>
+
+``` r
+'clothes_data <- 
+   write_table(~clothing, ~num_items,
+                "🩲",      3,
+                "👕",      6,
+                "👖",      5)
+                
+ggkids(data = clothes_data) +
+  use_x(clothing) + 
+  use_y(num_items) + 
+  chart_bar() + 
+  theme_kids(ink = "deepskyblue2")' |> 
+  ggram::ggram(code = _, title = "A cool kid's clothes chart! 😃")
+```
+
+<img src="man/figures/README-unnamed-chunk-32-1.png" width="100%" />
+
+``` r
+
+
+'temps_data <- write_table(~time, ~temp,
+                  "6am\\n🌞", 60, 
+                  "8am",      70,
+                 "10am",      80,
+                 "12pm",      82,
+                  "2pm",      84,
+                  "4pm",      80,
+                  "6pm",      78,
+                  "8pm",      70,
+                 "10pm\\n🌜", 65)
+                
+ggkids(data = temps_data) +
+  use_x(time) + 
+  use_y(temp) + 
+  chart_point() + 
+  chart_line() + 
+  set_color("black") +
+  theme_kids(ink = "red3", 
+             base_size = 16) + 
+  stamp_picture("🌞", x = .8 |> I(), y = .9 |> I(),
+  size = 20)' |> 
+  ggram::ggram(code = _, title = "A cool kid's temperatures chart! 🥵😃")
+```
+
+<img src="man/figures/README-unnamed-chunk-32-2.png" width="100%" />
 
 # Minimal Packaging
 
