@@ -25,9 +25,9 @@ Work builds on [2025-01-28-ggkids](https://evamaerey.github.io/mytidytuesday/202
 
 The goal of ggkids is to ...
 
-## Installation
+## ~~Installation~~
 
-You can install the development version of ggkids from [GitHub](https://github.com/) with:
+Nope, not a package yet! ~~You can install the development version of ggkids from [GitHub](https://github.com/) with:~~
 
 ``` r
 # install.packages("pak")
@@ -68,7 +68,6 @@ ggplot2 is quite logical and accessible, but may present some challenges for you
 
 ![](man/figures/clipboard-1464658933.png){width="341"}
 
-0.  
 
 1.  `ggkids()` is an alias for `ggplot()`. It can be used to initialized the plot and set global data just like `ggplot()`, but `ggkids` might be preferred if you want to more strongly signal 'this version is just for you, kiddos!'. But brings along it's own theme.
 
@@ -669,7 +668,7 @@ last_plot() +
 
 # See, Touch, Hear, Smell, Taste
 
-```{r, echo = T, eval = F}
+```{r, echo = T, eval = T}
 'senses_table <- 
   write_table(~order, ~sense, ~reps, 
               "1st", "👁️", 5,
@@ -684,7 +683,7 @@ senses_table |>
   use_y(reps) + 
   use_picture(sense) + 
   chart_item_stack()' |>
-ggram::ggram(code = _, widths = c(1,1.6))
+ggram::ggram(code = _, widths = c(1, 1.6))
 
 
 
@@ -1036,7 +1035,7 @@ ggkids(data = temps_data) +
 
 ```
 
-# Stacking cars
+# Stacking Cars ...
 
 ```{r}
 write_table(~car, ~count,

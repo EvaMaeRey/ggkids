@@ -1,7 +1,7 @@
 ggkids
 ================
 
-- [Installation](#installation)
+- [~~Installation~~](#installation)
 - [Example](#example)
 - [Pets Popularity](#pets-popularity)
 - [Crustaceans Race](#crustaceans-race)
@@ -14,7 +14,7 @@ ggkids
 - [Scooter Repair Cost](#scooter-repair-cost)
 - [Mood Repair](#mood-repair)
 - [Clothing count & temp variation](#clothing-count--temp-variation)
-- [Stacking cars](#stacking-cars)
+- [Stacking Cars …](#stacking-cars-)
 - [Minimal Packaging](#minimal-packaging)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -30,10 +30,10 @@ deprecated).
 
 The goal of ggkids is to …
 
-## Installation
+## ~~Installation~~
 
-You can install the development version of ggkids from
-[GitHub](https://github.com/) with:
+Nope, not a package yet! ~~You can install the development version of
+ggkids from [GitHub](https://github.com/) with:~~
 
 ``` r
 # install.packages("pak")
@@ -68,7 +68,6 @@ interpreting error messages.
 
 <img src="man/figures/clipboard-1464658933.png" width="341" />
 
-0.  
 1.  `ggkids()` is an alias for `ggplot()`. It can be used to initialized
     the plot and set global data just like `ggplot()`, but `ggkids`
     might be preferred if you want to more strongly signal ‘this version
@@ -649,7 +648,7 @@ ggprop.test:::compute_group_bricks
 #>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
 #>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x13f53beb0>
+#> <bytecode: 0x14fbb4c50>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
@@ -694,8 +693,10 @@ senses_table |>
   use_y(reps) + 
   use_picture(sense) + 
   chart_item_stack()' |>
-ggram::ggram(code = _, widths = c(1,1.6))
+ggram::ggram(code = _, widths = c(1, 1.6))
 ```
+
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 <details>
 
@@ -977,7 +978,7 @@ ggkids(data = temps_data) +
 
 <img src="man/figures/README-unnamed-chunk-32-2.png" width="100%" />
 
-# Stacking cars
+# Stacking Cars …
 
 ``` r
 write_table(~car, ~count,

@@ -60,7 +60,7 @@
 <div class="page-header"><h1 id="ggkids">ggkids<a class="anchor" aria-label="anchor" href="#ggkids"></a>
 </h1></div>
 <ul>
-<li><a href="#installation">Installation</a></li>
+<li><a href="#installation"><del>Installation</del></a></li>
 <li><a href="#example">Example</a></li>
 <li><a href="#pets-popularity">Pets Popularity</a></li>
 <li><a href="#crustaceans-race">Crustaceans Race</a></li>
@@ -73,15 +73,16 @@
 <li><a href="#scooter-repair-cost">Scooter Repair Cost</a></li>
 <li><a href="#mood-repair">Mood Repair</a></li>
 <li><a href="#clothing-count--temp-variation">Clothing count &amp; temp variation</a></li>
-<li><a href="#stacking-cars">Stacking cars</a></li>
+<li><a href="#stacking-cars-">Stacking Cars …</a></li>
 <li><a href="#minimal-packaging">Minimal Packaging</a></li>
 </ul>
-<!-- README.md is generated from README.Rmd. Please edit that file --><!-- badges: start --><!-- badges: end --><p>Work builds on <a href="https://evamaerey.github.io/mytidytuesday/2025-01-28-ggkids/ggkids.html" class="external-link">2025-01-28-ggkids</a> and <a href="https://github.com/EvaMaeRey/daphne" class="external-link">daphne</a> package (now depricated).</p>
+<!-- README.md is generated from README.Rmd. Please edit that file --><!-- badges: start --><!-- badges: end --><p>Work builds on <a href="https://evamaerey.github.io/mytidytuesday/2025-01-28-ggkids/ggkids.html" class="external-link">2025-01-28-ggkids</a> and <a href="https://github.com/EvaMaeRey/daphne" class="external-link">daphne</a> package (now deprecated).</p>
 <p>The goal of ggkids is to …</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="installation">
+<del>Installation</del><a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of ggkids from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>Nope, not a package yet! <del>You can install the development version of ggkids from <a href="https://github.com/" class="external-link">GitHub</a> with:</del></p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"EvaMaeRey/ggkids"</span><span class="op">)</span></span></code></pre></div>
@@ -89,11 +90,18 @@
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>ggkids is about bringing the grammar of graphics and ggplot2 to very young learners.</p>
+<p>ggkids is about bringing the grammar of graphics and ggplot2 to young learners.</p>
 <p>ggplot2 is quite logical and accessible, but may present some challenges for young learners given a more limited vocabulary and little experience interpreting error messages.</p>
 <ol start="0" style="list-style-type: decimal">
-<li><p>the package contains data that let young learners replicate several plots from the new <a href="https://www.daphnedrawsdata.com/" class="external-link">‘Daphne Draws Data’</a> book by <a href="https://www.storytellingwithdata.com/" class="external-link">Storytelling with Data</a> Founder Cole Nussbaumer-Knaflic and illustrator <a href="https://www.amazon.com/stores/author/B001IXS442/about" class="external-link">John Skewes</a>, a couple plots from Josh Starmer’s (<a href="https://statquest.org/" class="external-link">StatQuest</a>) book <a href="https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK" class="external-link">‘Norm and ’Squatch Make a New Friend’</a>.</p></li>
-<li><p><code>ggkids()</code> is an alias for <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>. It can be used to initialized the plot and set global data just like <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>, but <code>ggkids</code> might be preferred if you want to more strongly signal ‘this version is just for you, kiddos!’. But brings along it’s own theme.</p></li>
+<li>the package contains data that let young learners replicate several plots from the new <a href="https://www.daphnedrawsdata.com/" class="external-link">‘Daphne Draws Data’</a> book by <a href="https://www.storytellingwithdata.com/" class="external-link">Storytelling with Data</a> Founder Cole Nussbaumer-Knaflic and illustrator <a href="https://www.amazon.com/stores/author/B001IXS442/about" class="external-link">John Skewes</a>, a couple plots from Josh Starmer’s (<a href="https://statquest.org/" class="external-link">StatQuest</a>) book <a href="https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK" class="external-link">‘Norm and ’Squatch Make a New Friend’</a>.</li>
+</ol>
+<p><img src="reference/figures/clipboard-2864349079.png" width="407"></p>
+<p><img src="reference/figures/clipboard-774641120.png" width="357"></p>
+<p><img src="reference/figures/clipboard-1132436683.png" width="382"></p>
+<p><img src="reference/figures/clipboard-1464658933.png" width="341"></p>
+<ol style="list-style-type: decimal">
+<li>
+<code>ggkids()</code> is an alias for <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>. It can be used to initialized the plot and set global data just like <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot()</a></code>, but <code>ggkids</code> might be preferred if you want to more strongly signal ‘this version is just for you, kiddos!’. But brings along it’s own theme.</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
@@ -373,6 +381,18 @@
 <span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">statexpress</span><span class="op">)</span></span>
+<span><span class="va">chart_mark</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_identity.html" class="external-link">stat_identity</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="va">GeomText</span>, show.legend <span class="op">=</span> <span class="cn">F</span>, <span class="va">...</span><span class="op">)</span>,</span>
+<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="co"># aes_default(aes(shape = I(after_stat(picture)))),</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span>, </span>
+<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  </span>
+<span>  <span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span></span>
+<span></span>
 <span><span class="va">chart_point</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_identity.html" class="external-link">stat_identity</a></span><span class="op">(</span>geom <span class="op">=</span> <span class="va">GeomPointFill</span>, show.legend <span class="op">=</span> <span class="cn">F</span>, <span class="va">...</span><span class="op">)</span>,</span>
 <span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -382,7 +402,6 @@
 <span>  </span>
 <span>  <span class="op">)</span></span>
 <span>  <span class="op">}</span></span>
-<span></span>
 <span></span>
 <span><span class="va">chart_picture</span> <span class="op">&lt;-</span> <span class="va">chart_point</span></span>
 <span></span>
@@ -396,7 +415,9 @@
 <span>  </span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">use_picture</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">picture</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="op">{</span><span class="op">{</span><span class="va">picture</span><span class="op">}</span><span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
+<span><span class="va">set_picture</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">picture</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="op">{</span><span class="op">{</span><span class="va">picture</span><span class="op">}</span><span class="op">}</span><span class="op">)</span><span class="op">)</span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">use_picture</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">picture</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="op">{</span><span class="op">{</span><span class="va">picture</span><span class="op">}</span><span class="op">}</span><span class="op">)</span><span class="op">}</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">ocean_table</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   speed size type</span></span>
@@ -461,7 +482,7 @@
 <span>  <span class="fu">encode</span><span class="op">(</span>x <span class="op">=</span> <span class="va">seconds</span>, </span>
 <span>      y <span class="op">=</span> <span class="va">height</span>, </span>
 <span>      picture <span class="op">=</span> <span class="va">item</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu">chart_point</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<span>  <span class="fu">chart_mark</span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-15-1.png" width="100%"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
@@ -532,7 +553,7 @@
 <span>  </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>  <span class="fu">qlayer</span><span class="op">(</span></span>
-<span>    geom <span class="op">=</span> <span class="va">GeomPointFill</span>, </span>
+<span>    geom <span class="op">=</span> <span class="va">GeomText</span>, </span>
 <span>    stat <span class="op">=</span> <span class="fu">qstat</span><span class="op">(</span><span class="va">compute_item_stack</span><span class="op">)</span></span>
 <span>  <span class="op">)</span>,</span>
 <span>  <span class="co"># spacing</span></span>
@@ -545,7 +566,8 @@
 <span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"All"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/guides.html" class="external-link">guides</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"⚫️"</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span>
 <span></span>
 <span>  </span>
@@ -557,7 +579,7 @@
 <span><span class="co">#&gt;     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), </span></span>
 <span><span class="co">#&gt;         y = row - 0.5), width = width)</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x1654d0cf8&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0x14fbb4c50&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:ggprop.test&gt;</span></span>
 <span></span>
 <span><span class="va">jungle_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>tree <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"🌴#"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, </span>
@@ -584,7 +606,24 @@
 <div class="section level1">
 <h1 id="see-touch-hear-smell-taste">See, Touch, Hear, Smell, Taste<a class="anchor" aria-label="anchor" href="#see-touch-hear-smell-taste"></a>
 </h1>
-<details><div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="st">'senses_table &lt;- </span></span>
+<span><span class="st">  write_table(~order, ~sense, ~reps, </span></span>
+<span><span class="st">              "1st", "👁️", 5,</span></span>
+<span><span class="st">              "2nd", "✋", 4,</span></span>
+<span><span class="st">              "3rd", "👂", 3,</span></span>
+<span><span class="st">              "4th", "👃", 2,</span></span>
+<span><span class="st">              "5th", "👅", 1)</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">senses_table |&gt; </span></span>
+<span><span class="st">  ggkids() + </span></span>
+<span><span class="st">  use_x(order) + </span></span>
+<span><span class="st">  use_y(reps) + </span></span>
+<span><span class="st">  use_picture(sense) + </span></span>
+<span><span class="st">  chart_item_stack()'</span> <span class="op">|&gt;</span></span>
+<span><span class="fu">ggram</span><span class="fu">::</span><span class="fu">ggram</span><span class="op">(</span>code <span class="op">=</span> <span class="va">_</span>, widths <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1.6</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-19-1.png" width="100%"></p>
+<details><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">real_fries_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>id_fry <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">7</span>, </span>
 <span>                               seconds <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -606,7 +645,7 @@
 <div class="section level1">
 <h1 id="polar-bears-dive">Polar Bears Dive<a class="anchor" aria-label="anchor" href="#polar-bears-dive"></a>
 </h1>
-<details><div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">chart_bar_plunging</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_label</a></span><span class="op">(</span>vjust <span class="op">=</span> <span class="fl">1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>, fill <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>,</span>
 <span>                  linewidth <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
@@ -617,7 +656,7 @@
 <span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span>       <span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bears</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"🐻‍❄️ #"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span></span>
 <span><span class="va">depth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">5</span>,<span class="fl">4</span>,<span class="fl">6</span>,<span class="fl">5</span><span class="op">)</span></span>
 <span></span>
@@ -629,7 +668,7 @@
 <div class="section level1">
 <h1 id="digging-instruments">Digging Instruments<a class="anchor" aria-label="anchor" href="#digging-instruments"></a>
 </h1>
-<details><div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">15</span>, <span class="fl">30</span>, <span class="fl">45</span>, <span class="fl">60</span><span class="op">)</span></span>
 <span><span class="va">num_tunnels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5.5</span>, <span class="fl">5.9</span><span class="op">)</span></span>
 <span><span class="va">fork_and_spoon_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/deprecated.html" class="external-link">data_frame</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">num_tunnels</span>, type <span class="op">=</span> <span class="st">"🍴"</span><span class="op">)</span></span>
@@ -650,13 +689,13 @@
 <span><span class="va">digging_table</span> <span class="op">&lt;-</span> <span class="va">fork_and_spoon_table</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">shovel_and_bucket_table</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="va">paws_table</span><span class="op">)</span></span></code></pre></div>
-</details><p><img src="reference/figures/README-unnamed-chunk-26-1.png" width="100%"></p>
+</details>
 </div>
 <div class="section level1">
 <h1 id="outer-space-travel">Outer Space Travel<a class="anchor" aria-label="anchor" href="#outer-space-travel"></a>
 </h1>
 <p>(future work)</p>
-<details><div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">outer_space_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>shuttle <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"🚀#"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span>, fuel <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">.3</span>,<span class="fl">.5</span>,<span class="fl">.3</span>, <span class="fl">.8</span>,<span class="fl">.7</span>, <span class="fl">.4</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -675,19 +714,19 @@
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_hline</a></span><span class="op">(</span>yintercept <span class="op">=</span> <span class="va">y</span>, linetype <span class="op">=</span> <span class="va">linetype</span>, <span class="va">...</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="op">}</span></span></code></pre></div>
-</details><div class="sourceCode" id="cb29"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a><span class="co">#&gt;   shuttle fuel</span></span>
-<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a><span class="co">#&gt; 1    🚀#1  0.3</span></span>
-<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a><span class="co">#&gt; 2    🚀#2  0.5</span></span>
-<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a><span class="co">#&gt; 3    🚀#3  0.3</span></span>
-<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a><span class="co">#&gt; 4    🚀#4  0.8</span></span>
-<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a><span class="co">#&gt; 5    🚀#5  0.7</span></span>
-<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a><span class="co">#&gt; 6    🚀#6  0.4</span></span></code></pre></div>
+</details><div class="sourceCode" id="cb30"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" tabindex="-1"></a><span class="co">#&gt;   shuttle fuel</span></span>
+<span id="cb30-2"><a href="#cb30-2" tabindex="-1"></a><span class="co">#&gt; 1    🚀#1  0.3</span></span>
+<span id="cb30-3"><a href="#cb30-3" tabindex="-1"></a><span class="co">#&gt; 2    🚀#2  0.5</span></span>
+<span id="cb30-4"><a href="#cb30-4" tabindex="-1"></a><span class="co">#&gt; 3    🚀#3  0.3</span></span>
+<span id="cb30-5"><a href="#cb30-5" tabindex="-1"></a><span class="co">#&gt; 4    🚀#4  0.8</span></span>
+<span id="cb30-6"><a href="#cb30-6" tabindex="-1"></a><span class="co">#&gt; 5    🚀#5  0.7</span></span>
+<span id="cb30-7"><a href="#cb30-7" tabindex="-1"></a><span class="co">#&gt; 6    🚀#6  0.4</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-27-1.png" width="100%"></p>
 </div>
 <div class="section level1">
 <h1 id="scooter-repair-cost">Scooter Repair Cost<a class="anchor" aria-label="anchor" href="#scooter-repair-cost"></a>
 </h1>
-<details><div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<details><div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">scale_y_counting</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">breaks</span> <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">10000</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span></span>
@@ -709,7 +748,7 @@
 <span><span class="va">scooter_table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="va">weeks</span>, <span class="va">num_coins</span>, <span class="va">coin</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">usethis</span><span class="fu">::</span><span class="fu"><a href="https://usethis.r-lib.org/reference/use_data.html" class="external-link">use_data</a></span><span class="op">(</span><span class="va">scooter_table</span>, overwrite <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compute_panel_count</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">scales</span><span class="op">)</span><span class="op">{</span></span>
 <span>            <span class="va">data</span> <span class="op">|&gt;</span> </span>
 <span>             <span class="fu"><a href="https://tidyr.tidyverse.org/reference/uncount.html" class="external-link">uncount</a></span><span class="op">(</span><span class="va">y</span>, .remove <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span>
@@ -728,15 +767,15 @@
 <span><span class="co">#&gt; 5     2     3</span></span>
 <span><span class="co">#&gt; 6     2     3</span></span>
 <span></span>
-<span><span class="va">chart_point_count</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
+<span><span class="va">chart_mark_count</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>  <span class="fu">qlayer</span><span class="op">(</span>geom <span class="op">=</span> <span class="va">GeomPointFill</span>,</span>
+<span>  <span class="fu">qlayer</span><span class="op">(</span>geom <span class="op">=</span> <span class="va">GeomText</span>,</span>
 <span>         stat <span class="op">=</span> <span class="fu">qstat</span><span class="op">(</span>compute_panel <span class="op">=</span> <span class="va">compute_panel_count</span><span class="op">)</span>, </span>
 <span>         position <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html" class="external-link">position_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">.12</span>, height <span class="op">=</span> <span class="fl">.12</span><span class="op">)</span>,</span>
 <span>         <span class="va">...</span>, show.legend <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>,</span>
 <span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>shape <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html" class="external-link">after_stat</a></span><span class="op">(</span><span class="va">picture</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  <span class="fu">aes_default</span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"x"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_size.html" class="external-link">scale_size</a></span><span class="op">(</span>range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
 <span>  </span>
 <span>  <span class="op">)</span></span>
@@ -746,7 +785,7 @@
 <div class="section level1">
 <h1 id="mood-repair">Mood Repair<a class="anchor" aria-label="anchor" href="#mood-repair"></a>
 </h1>
-<p><img src="images/clipboard-2663306703.png"></p>
+<p><img src="reference/figures/clipboard-2663306703.png"></p>
 <blockquote>
 <p>My 5-year-old was really excited to show me the graph that she made. It warmed my heart.</p>
 <p>Not only does she already understand the need for evidence-based approaches for managing wellbeing, but she also appreciates the importance of tracking processes longitudinally and examining change over time.</p>
@@ -758,14 +797,14 @@
 <div class="section level1">
 <h1 id="clothing-count--temp-variation">Clothing count &amp; temp variation<a class="anchor" aria-label="anchor" href="#clothing-count--temp-variation"></a>
 </h1>
-<p><img src="images/clipboard-4008049403.png"></p>
+<p><img src="reference/figures/clipboard-4008049403.png"></p>
 <p>I’ve taught data visualization to hundreds of professionals (soon to be thousands!) but I was not prepared for how fun it would be to teach my 5-year-old.</p>
 <p>I’ve been eagerly waiting to read Daphne Draws Data with him – a children’s book within the storytelling with data series – until he was old enough.</p>
 <p>We read it before bed, and then proceeded to stay up 45 minutes past bedtime because he wanted to draw his own bar charts and line charts (for real, this isn’t one of those made-for-LinkedIn stories).</p>
 <p>And I gotta say, while I’m always proud of all my students, I do now officially have a favorite</p>
 <p>If you have a little one in your life between the ages of 5 and 10, this is the best $12 I’ve spent in a long time: <a href="https://www.linkedin.com/safety/go/?url=https%3A%2F%2Famzn%2Eto%2F3Q7GEwb&amp;urlhash=Rjhi&amp;mt=OH7VqbmZQV7Wr5SftIwT1dw3X0g1MQ_jtoJRT7JwwHrQsRjLBE7FTS8NpKCaylxLHGsx7QsmHgbsKCHeBTVu8WQDvrpq5VT8sgs_hSndXXu8I2gNu9ShnJHI&amp;isSdui=true" class="external-link"><strong>https://amzn.to/3Q7GEwb</strong></a></p>
 <p><a href="https://www.linkedin.com/in/morgandepenbusch/" class="external-link uri">https://www.linkedin.com/in/morgandepenbusch/</a></p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="st">'clothes_data &lt;- </span></span>
 <span><span class="st">   write_table(~clothing, ~num_items,</span></span>
 <span><span class="st">                "🩲",      3,</span></span>
@@ -779,7 +818,7 @@
 <span><span class="st">  theme_kids(ink = "deepskyblue2")'</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu">ggram</span><span class="fu">::</span><span class="fu">ggram</span><span class="op">(</span>code <span class="op">=</span> <span class="va">_</span>, title <span class="op">=</span> <span class="st">"A cool kid's clothes chart! 😃"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-32-1.png" width="100%"></p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span></span>
 <span><span class="st">'temps_data &lt;- write_table(~time, ~temp,</span></span>
@@ -807,9 +846,9 @@
 <p><img src="reference/figures/README-unnamed-chunk-32-2.png" width="100%"></p>
 </div>
 <div class="section level1">
-<h1 id="stacking-cars">Stacking cars<a class="anchor" aria-label="anchor" href="#stacking-cars"></a>
+<h1 id="stacking-cars-">Stacking Cars …<a class="anchor" aria-label="anchor" href="#stacking-cars-"></a>
 </h1>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">write_table</span><span class="op">(</span><span class="op">~</span><span class="va">car</span>, <span class="op">~</span><span class="va">count</span>,</span>
 <span>            <span class="st">"🚗"</span>, <span class="fl">10</span>,</span>
 <span>            <span class="st">"🚕"</span>, <span class="fl">5</span>,</span>
@@ -817,13 +856,14 @@
 <span>  <span class="fu">ggkids</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">use_x</span><span class="op">(</span><span class="va">car</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">use_y</span><span class="op">(</span><span class="va">count</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">chart_item_stack</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu">chart_item_stack</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">use_picture</span><span class="op">(</span><span class="va">car</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-33-1.png" width="100%"></p>
 </div>
 <div class="section level1">
 <h1 id="minimal-packaging">Minimal Packaging<a class="anchor" aria-label="anchor" href="#minimal-packaging"></a>
 </h1>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitrExtra</span><span class="fu">:::</span><span class="fu"><a href="https://rdrr.io/pkg/knitrExtra/man/chunk_names_get.html" class="external-link">chunk_names_get</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "unnamed-chunk-1"  "setup"            "unnamed-chunk-2"  "theme_kids"      </span></span>
 <span><span class="co">#&gt;  [5] "unnamed-chunk-3"  "ggkids"           "unnamed-chunk-4"  "unnamed-chunk-5" </span></span>
