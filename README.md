@@ -14,6 +14,7 @@ ggkids
 - [Scooter Repair Cost](#scooter-repair-cost)
 - [Mood Repair](#mood-repair)
 - [Clothing count & temp variation](#clothing-count--temp-variation)
+- [Stacking cars](#stacking-cars)
 - [Minimal Packaging](#minimal-packaging)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -25,7 +26,7 @@ ggkids
 Work builds on
 [2025-01-28-ggkids](https://evamaerey.github.io/mytidytuesday/2025-01-28-ggkids/ggkids.html)
 and [daphne](https://github.com/EvaMaeRey/daphne) package (now
-depricated).
+deprecated).
 
 The goal of ggkids is to …
 
@@ -41,8 +42,8 @@ pak::pak("EvaMaeRey/ggkids")
 
 ## Example
 
-ggkids is about bringing the grammar of graphics and ggplot2 to very
-young learners.
+ggkids is about bringing the grammar of graphics and ggplot2 to young
+learners.
 
 ggplot2 is quite logical and accessible, but may present some challenges
 for young learners given a more limited vocabulary and little experience
@@ -59,6 +60,15 @@ interpreting error messages.
     a New
     Friend’](https://www.amazon.com/Norm-Squatch-Make-New-Friend/dp/B0FJFV46SK).
 
+<img src="man/figures/clipboard-2864349079.png" width="407" />
+
+<img src="man/figures/clipboard-774641120.png" width="357" />
+
+<img src="man/figures/clipboard-1132436683.png" width="382" />
+
+<img src="man/figures/clipboard-1464658933.png" width="341" />
+
+0.  
 1.  `ggkids()` is an alias for `ggplot()`. It can be used to initialized
     the plot and set global data just like `ggplot()`, but `ggkids`
     might be preferred if you want to more strongly signal ‘this version
@@ -411,6 +421,18 @@ GeomPointFill <- qproto_update(GeomPoint, aes(shape = 21),
 
 
 library(statexpress)
+chart_mark <- function(...){
+  list(stat_identity(geom = GeomText, show.legend = F, ...),
+  aes_default(aes(x = 0)),
+  aes_default(aes(y = 0)),
+  # aes_default(aes(shape = I(after_stat(picture)))),
+  scale_size(range = c(2,10)), 
+  aes_default(aes(label = "x"))
+  
+  )
+  }
+
+
 chart_point <- function(...){
   list(stat_identity(geom = GeomPointFill, show.legend = F, ...),
   aes_default(aes(x = 0)),
@@ -420,7 +442,6 @@ chart_point <- function(...){
   
   )
   }
-
 
 chart_picture <- chart_point
 
@@ -434,7 +455,9 @@ chart_fit_global_line <- function(...){
   
 }
 
-use_picture <- function(picture){aes(shape = I({{picture}}))}
+set_picture <- function(picture){aes(shape = I({{picture}}))}
+
+use_picture <- function(picture){aes(label = {{picture}})}
 ```
 
 ``` r
@@ -512,7 +535,7 @@ real_fries_table |>
   encode(x = seconds, 
       y = height, 
       picture = item) + 
-  chart_point() 
+  chart_mark() 
 ```
 
 <img src="man/figures/README-unnamed-chunk-15-1.png" width="100%" />
@@ -591,8 +614,7 @@ compute_item_stack <- function(data, scales, width = 0.2){
     data |> 
       uncount(y) |>
       dplyr::mutate(row = row_number()) |> 
-      dplyr::mutate(y = row - 
-        0.5) |>
+      dplyr::mutate(y = row - 0.5) |>
       dplyr::mutate(width = width)
     
   }
@@ -601,7 +623,7 @@ chart_item_stack <- function(...){
   
   list(
   qlayer(
-    geom = GeomPointFill, 
+    geom = GeomText, 
     stat = qstat(compute_item_stack)
   ),
   # spacing
@@ -614,7 +636,8 @@ chart_item_stack <- function(...){
   aes_default(aes(y = 1)),
   aes_default(aes(x = "All")),
   labs(x = NULL, y = NULL),
-  guides(y = "none")
+  guides(y = "none"),
+  aes_default(aes(label = "⚫️"))
   )
 
   
@@ -626,7 +649,7 @@ ggprop.test:::compute_group_bricks
 #>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
 #>         y = row - 0.5), width = width)
 #> }
-#> <bytecode: 0x128636a90>
+#> <bytecode: 0x13f53beb0>
 #> <environment: namespace:ggprop.test>
 
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
@@ -655,6 +678,24 @@ jungle_table |>
 <img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
 
 # See, Touch, Hear, Smell, Taste
+
+``` r
+'senses_table <- 
+  write_table(~order, ~sense, ~reps, 
+              "1st", "👁️", 5,
+              "2nd", "✋", 4,
+              "3rd", "👂", 3,
+              "4th", "👃", 2,
+              "5th", "👅", 1)
+
+senses_table |> 
+  ggkids() + 
+  use_x(order) + 
+  use_y(reps) + 
+  use_picture(sense) + 
+  chart_item_stack()' |>
+ggram::ggram(code = _, widths = c(1,1.6))
+```
 
 <details>
 
@@ -740,8 +781,6 @@ digging_table <- fork_and_spoon_table |>
 
 </details>
 
-<img src="man/figures/README-unnamed-chunk-26-1.png" width="100%" />
-
 # Outer Space Travel
 
 (future work)
@@ -786,6 +825,20 @@ stamp_hline <- function(y = .5, linetype = "dashed", ...){
 <details>
 
 ``` r
+
+scale_y_counting <- function(breaks = 0:10000, ...){
+
+  ggplot2::scale_y_continuous(breaks = breaks)
+
+}
+
+scale_x_counting <- function(breaks = 0:10000, ...){
+
+  ggplot2::scale_x_continuous(breaks = breaks)
+
+}
+
+
 weeks <- c(0,1,2)
 num_coins <- c(1,2,3)
 coin <- c("🪙", "🪙🪙", "🪙🪙🪙")
@@ -814,15 +867,15 @@ scooter_table |>
 #> 5     2     3
 #> 6     2     3
 
-chart_point_count <- function(...){
+chart_mark_count <- function(...){
   list(
-  qlayer(geom = GeomPointFill,
+  qlayer(geom = GeomText,
          stat = qstat(compute_panel = compute_panel_count), 
          position = position_jitter(width = .12, height = .12),
          ..., show.legend = F),
   aes_default(aes(x = 0)),
   aes_default(aes(y = 0)),
-  aes_default(aes(shape = I(after_stat(picture)))),
+  aes_default(aes(label = "x")),
   scale_size(range = c(2,10))
   
   )
@@ -835,7 +888,7 @@ chart_point_count <- function(...){
 
 # Mood Repair
 
-![](images/clipboard-2663306703.png)
+![](man/figures/clipboard-2663306703.png)
 
 > My 5-year-old was really excited to show me the graph that she made.
 > It warmed my heart.  
@@ -855,7 +908,7 @@ chart_point_count <- function(...){
 
 # Clothing count & temp variation
 
-![](images/clipboard-4008049403.png)
+![](man/figures/clipboard-4008049403.png)
 
 I’ve taught data visualization to hundreds of professionals (soon to be
 thousands!) but I was not prepared for how fun it would be to teach my
@@ -924,8 +977,35 @@ ggkids(data = temps_data) +
 
 <img src="man/figures/README-unnamed-chunk-32-2.png" width="100%" />
 
+# Stacking cars
+
+``` r
+write_table(~car, ~count,
+            "🚗", 10,
+            "🚕", 5,
+            "🚓", 2) |> 
+  ggkids() + 
+  use_x(car) + 
+  use_y(count) +
+  chart_item_stack() + 
+  use_picture(car)
+```
+
+<img src="man/figures/README-unnamed-chunk-33-1.png" width="100%" />
+
 # Minimal Packaging
 
 ``` r
-# knitrExtra::chunk()
+knitrExtra:::chunk_names_get()
+#>  [1] "unnamed-chunk-1"  "setup"            "unnamed-chunk-2"  "theme_kids"      
+#>  [5] "unnamed-chunk-3"  "ggkids"           "unnamed-chunk-4"  "unnamed-chunk-5" 
+#>  [9] "aes_to_use"       "unnamed-chunk-6"  "unnamed-chunk-7"  "chart_pie"       
+#> [13] "unnamed-chunk-8"  "unnamed-chunk-9"  "unnamed-chunk-10" "crustaceans"     
+#> [17] "GeomPointFill"    "unnamed-chunk-11" "unnamed-chunk-12" "unnamed-chunk-13"
+#> [21] "unnamed-chunk-14" "unnamed-chunk-15" "unnamed-chunk-16" "jungle_table"    
+#> [25] "unnamed-chunk-17" "unnamed-chunk-18" "unnamed-chunk-19" "unnamed-chunk-20"
+#> [29] "unnamed-chunk-21" "unnamed-chunk-22" "unnamed-chunk-23" "unnamed-chunk-24"
+#> [33] "unnamed-chunk-25" "unnamed-chunk-26" "shuttles"         "unnamed-chunk-27"
+#> [37] "unnamed-chunk-28" "unnamed-chunk-29" "unnamed-chunk-30" "unnamed-chunk-31"
+#> [41] "unnamed-chunk-32" "unnamed-chunk-33" "unnamed-chunk-34"
 ```
