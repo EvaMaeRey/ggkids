@@ -1,7 +1,7 @@
 ggkids
 ================
 
-- [~~Installation~~](#installation)
+- [Installation](#installation)
 - [Example](#example)
 - [Pets Popularity](#pets-popularity)
 - [Crustaceans Race](#crustaceans-race)
@@ -30,10 +30,10 @@ deprecated).
 
 The goal of ggkids is to …
 
-## ~~Installation~~
+## Installation
 
-Nope, not a package yet! ~~You can install the development version of
-ggkids from [GitHub](https://github.com/) with:~~
+Nope, not a package yet! You can install the development version of
+ggkids from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
@@ -93,10 +93,6 @@ theme_kids <- function(paper = "grey98",
     ) 
 }
 
-# todo... move to theme
-update_geom_defaults(GeomPoint, aes(size = from_theme(pointsize * 3)))
-
-update_geom_defaults(GeomText, aes(size = from_theme(pointsize * 3)))
 
 #' @export
 label_title <- function(title){labs(title = title)}
@@ -107,15 +103,16 @@ label_subtitle <- function(subtitle){labs(subtitle = subtitle)}
 #' @export
 label_caption <- function(caption){labs(caption = caption)}
 
+#' @export
+label_x <- function(x){labs(x = x)}
 
+#' @export
+label_y <- function(y){labs(y = y)}
+
+
+
+#' @export
 write_table <- function(...){tribble(...) |> mutate(across(where(is.character), forcats::fct_inorder))}
-
-# write_table(~pets, ~number_of_pets,
-#               "🐱",  30,
-#               "🐶",  25,
-#               "🦚",  10,
-#               "🐠",  15,
-#               "🐰",   5)
 ```
 
 ``` r
@@ -126,9 +123,10 @@ ggplot(cars) +
   theme_kids() 
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
 
 ``` r
+#' @export
 ggkids <- function(data, 
                    spec_theme = theme_kids()){
   
@@ -143,11 +141,11 @@ ggkids(cars) +
   geom_point()
 ```
 
-<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 </details>
 
-<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />
 
 2.  `use` is an alias for `aes`, since ‘aesthetic’ is unlikely to be in
     the vocabulary of young learners. We think that you might say ‘let’s
@@ -193,9 +191,6 @@ label_y <- function(y){labs(y = y)}
 label_color <- function(color){labs(fill = color,
                                     color = color)}
 
-
-
-
 #' @export
 use_weight <- function(weight){aes(weight = {{weight}})}
 
@@ -229,30 +224,6 @@ use_group <- function(group){aes(group = {{group}})}
 
 #' @export
 use_color_line <- function(color){aes(color = {{color}})}
-
-#' @export
-use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shape = 21), 
-                                                         required_aes = c()),
-                                    stat = qstat(function(data, scales){data$x <- data$x %||% 0 ; data$y <- data$y %||% 0; data}), ...)}
-
-
-# data <- function(data){ggplot(data |> remove_missing()) + theme_classic(ink = "darkgrey", paper = "whitesmoke", base_size = 18)}
-
-# chart_jitter <- geom_jitter
-
-# chart_heat <- function(...){list(
-#   qlayer(geom = GeomTile, 
-#          stat = qproto_update(StatSum, aes(fill = after_stat(n), size = NULL)), ...),
-#   scale_fill_gradientn(colors = c("blue", "white", "yellow", "orange", "red")),
-#   theme(panel.grid.minor = element_line(color = "darkgrey")))
-# }
-
-
-# 
-# title <- function(title){labs(title = title)}
-# subtitle <- function(subtitle){labs(subtitle = subtitle)}
-# caption <- function(caption){labs(caption = caption)}
-# tag <- function(tag){labs(tag = tag)}
 ```
 
 </details>
@@ -276,7 +247,7 @@ use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shap
     are appropriate for the chart type in question,
     e.g. `chart_plunging_bar()` wraps up `geom_bar(stat = "identity")`
     with `scale_y_reverse()`. Available chart functions: `chart_bar`,
-    `chart_item_stack`
+    `chart_mark_stack`
 
 7.  Some of the chart functions are supported with new Stats, which are
     StatItemStack, StatPointCount,
@@ -284,10 +255,27 @@ use_chart_point <- function(...){qlayer(geom = qproto_update(GeomPoint, aes(shap
 <details>
 
 ``` r
-library(statexpress)
-library(tidyverse)
+#' @export
+qstat <- function (compute_group = ggplot2::Stat$compute_group, ...){
+    ggplot2::ggproto("StatTemp", ggplot2::Stat, compute_group = compute_group, 
+        ...)
+}
 
-# update_geom_defaults(GeomPoint, aes(size = from_theme(pointsize * 3)))
+#' @export
+qlayer <- function (mapping = NULL, data = NULL, geom = ggplot2::GeomPoint, stat = ggplot2::StatIdentity, 
+    position = position_identity(), ..., na.rm = FALSE, show.legend = NA, 
+    inherit.aes = TRUE) 
+{
+    ggplot2::layer(data = data, mapping = mapping, geom = geom, 
+        stat = stat, position = position, show.legend = show.legend, 
+        inherit.aes = inherit.aes, params = rlang::list2(na.rm = na.rm, 
+            ...))
+}
+```
+
+``` r
+
+
 
 #' @export
 aes_default <- function(default = aes(x = 0)) {
@@ -299,7 +287,6 @@ aes_default <- function(default = aes(x = 0)) {
     )
 
 }
-
 
 #' @import ggplot2
 #' @importFrom ggplot2 ggplot_add
@@ -366,6 +353,7 @@ chart_pie <- function(...){
 ```
 
 ``` r
+#' @export
 pets_table <- data.frame(pets = c("🐱", "🐶", "🦚", "🐠", "🐰"), 
                    number_of_pets = c(30, 25, 10, 15, 5)) |> 
   mutate(pets = fct_infreq(pets, number_of_pets) |> fct_rev())
@@ -390,11 +378,11 @@ pets_table |>
   use_area(number_of_pets)
 ```
 
-<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-8-1.png" width="100%" />
 
 </details>
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-9-1.png" width="100%" />
 
 # Crustaceans Race
 
@@ -415,13 +403,14 @@ ocean_table <- cars |>
 
 ``` r
 #' @export
-GeomPointFill <- qproto_update(GeomPoint, aes(shape = 21),
-                              required_aes = c())
+GeomPointFill <- ggplot2::ggproto(NULL, ggplot2::GeomPoint, 
+                         default_aes =
+                           modifyList(ggplot2::GeomPoint$default_aes,
+                         ggplot2::aes(shape = 21)))
 
-
-library(statexpress)
+#' @export
 chart_mark <- function(...){
-  list(stat_identity(geom = GeomText, show.legend = F, ...),
+  list(stat_identity(geom = ggplot2::GeomText, show.legend = F, ...),
   aes_default(aes(x = 0)),
   aes_default(aes(y = 0)),
   # aes_default(aes(shape = I(after_stat(picture)))),
@@ -431,7 +420,7 @@ chart_mark <- function(...){
   )
   }
 
-
+#' @export
 chart_point <- function(...){
   list(stat_identity(geom = GeomPointFill, show.legend = F, ...),
   aes_default(aes(x = 0)),
@@ -442,21 +431,22 @@ chart_point <- function(...){
   )
   }
 
-chart_picture <- chart_point
 
-# should replace with lm xy
+#' @export
 chart_fit_global_line <- function(...){
   
   geom_smooth(method = lm, ..., show.legend = F, se = F, 
               linetype = "dashed",
-              aes(shape = NULL, 
+              ggplot2::aes(shape = NULL, 
                   picture = NULL,))
   
 }
 
-set_picture <- function(picture){aes(shape = I({{picture}}))}
+#' @export
+set_picture <- function(picture){ggplot2::aes(shape = I({{picture}}))}
 
-use_picture <- function(picture){aes(label = {{picture}})}
+#' @export
+use_picture <- function(picture){ggplot2::aes(label = {{picture}})}
 ```
 
 ``` r
@@ -510,10 +500,31 @@ imaginary_fries_table <- all_fries_table |> slice(8:10)
 ```
 
 ``` r
+#' @import ggplot2
+#' @importFrom ggplot2 aes ggproto
+#' @export
+proto_update <- function (`_class`, `_inherit`, default_aes_update = NULL, ...){
+    if (!is.null(default_aes_update)) {
+        default_aes <- ggplot2::aes(!!!modifyList(`_inherit`$default_aes, 
+            default_aes_update))
+    }
+    ggplot2::ggproto(`_class` = `_class`, `_inherit` = `_inherit`, 
+        default_aes = default_aes, ...)
+}
+
+#' @import ggplot2
+#' @importFrom ggplot2 ggplot_add
+#' @export
+qproto_update <- function(`_inherit`, default_aes_update = NULL, ...){
+    proto_update("protoTemp", `_inherit`, default_aes_update = default_aes_update, 
+        ...)
+}
+
+#' @export
 chart_tile <- function(...){
   
   list(
-    qlayer(geom = qproto_update(GeomTile, aes( width = .75, height = .75)), ...),
+    qlayer(geom = qproto_update(GeomTile, ggplot2::aes( width = .75, height = .75)), ...),
     coord_equal()
     
   )
@@ -521,9 +532,10 @@ chart_tile <- function(...){
 }
 
 
+#' @export
 set_color <- function(color){
   
-  aes(fill = I(color |> alpha(.5)) , color = I(color))
+  ggplot2::aes(fill = I(color |> alpha(.5)), color = I(color))
   
 }
 ```
@@ -591,12 +603,14 @@ last_plot() +
 <details>
 
 ``` r
+#' @export
 theme_chart_bar <- function(){
   theme(panel.grid.minor = element_blank(), 
         panel.grid.major.x = element_blank(),
         axis.ticks.x = element_blank())
   }
 
+#' @export
 chart_bar <- function(...){
   list(theme_chart_bar(),
        geom_label(vjust = 0, aes(label = after_stat(y), fill = NULL),
@@ -606,7 +620,8 @@ chart_bar <- function(...){
        labs(x = NULL))
 }
 
-compute_item_stack <- function(data, scales, width = 0.2){
+
+compute_mark_stack <- function(data, scales, width = 0.2){
                
     data$shape <- data$shape %||% data$picture
 
@@ -618,46 +633,40 @@ compute_item_stack <- function(data, scales, width = 0.2){
     
   }
 
-chart_item_stack <- function(...){
+#' @export
+chart_mark_stack <- function(...){
   
   list(
   qlayer(
     geom = GeomText, 
-    stat = qstat(compute_item_stack)
+    stat = qstat(compute_mark_stack)
   ),
   # spacing
   qlayer(
     geom = GeomTile, 
-    stat = qstat(compute_item_stack), 
+    stat = qstat(compute_mark_stack), 
     alpha = 0
   ),
-  scale_y_continuous(expand = expansion(c(0, .3))),
+  ggplot2::scale_y_continuous(expand = ggplot2::expansion(c(0, .3))),
   aes_default(aes(y = 1)),
   aes_default(aes(x = "All")),
-  labs(x = NULL, y = NULL),
-  guides(y = "none"),
-  aes_default(aes(label = "⚫️"))
+  ggplot2::labs(x = NULL, y = NULL),
+  ggplot2::guides(y = "none"),
+  aes_default(aes(label = "x"))
   )
 
   
 }
+```
 
-ggprop.test:::compute_group_bricks
-#> function (data, scales, width = 0.2) 
-#> {
-#>     dplyr::mutate(dplyr::mutate(dplyr::mutate(data, row = row_number()), 
-#>         y = row - 0.5), width = width)
-#> }
-#> <bytecode: 0x14fbb4c50>
-#> <environment: namespace:ggprop.test>
-
+``` r
 jungle_table <- data.frame(tree = paste0("🌴#", 1:5), 
                      num_bunches = c(2, 5, 1, 2, 1), 
                      banana = "🍌")
 
 jungle_table |> 
   select(x = tree, y = num_bunches, picture = banana) |>
-  compute_item_stack()
+  compute_mark_stack()
 #>       x picture shape row    y width
 #> 1  🌴#1      🍌    🍌   1  0.5   0.2
 #> 2  🌴#1      🍌    🍌   2  1.5   0.2
@@ -674,7 +683,7 @@ jungle_table |>
 
 </details>
 
-<img src="man/figures/README-unnamed-chunk-18-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
 
 # See, Touch, Hear, Smell, Taste
 
@@ -692,11 +701,11 @@ senses_table |>
   use_x(order) + 
   use_y(reps) + 
   use_picture(sense) + 
-  chart_item_stack()' |>
+  chart_mark_stack()' |>
 ggram::ggram(code = _, widths = c(1, 1.6))
 ```
 
-<img src="man/figures/README-unnamed-chunk-19-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-20-1.png" width="100%" />
 
 <details>
 
@@ -710,31 +719,25 @@ real_fries_table <- data.frame(id_fry = 1:7,
 all_fries_table <- data.frame(id_fry = 1:10, 
                                seconds = c(1, 2, 1, 1, 2, 3, 1, 1,2,3),
                                height =  c(1, 1, 2, 3, 2, 1, 4, 5, 4, 2))
-# last_plot() + 
-#   annotate(geom = GeomText,
-#            x = I(.75), y = I(.72),
-#            label = "🎈🎀🙏",
-#            angle = -10,
-#            size = 22,
-#             )  
 ```
 
 </details>
 
-<img src="man/figures/README-unnamed-chunk-21-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-22-1.png" width="100%" />
 
 # Polar Bears Dive
 
 <details>
 
 ``` r
+#' @export
 chart_bar_plunging <- function(...){
-  list(geom_label(vjust = 1, aes(label = after_stat(y), fill = NULL),
+  list(ggplot2::geom_label(vjust = 1, aes(label = ggplot2::after_stat(y), fill = NULL),
                   linewidth = 0),
     geom_col(...), 
        theme_chart_bar(),
-       scale_y_reverse(expand = expansion(c(.3, 0))),
-       scale_x_discrete(position = "top"),
+       ggplot2::scale_y_reverse(expand = ggplot2::expansion(c(.3, 0))),
+       ggplot2::scale_x_discrete(position = "top"),
        labs(x = NULL)
        )
 }
@@ -766,18 +769,22 @@ shovel_and_bucket_table <- data_frame(time, num_tunnels = num_tunnels * 2, type 
 
 paws_table <- data_frame(time, num_tunnels = num_tunnels * 3, type = "🐾")
 
-chart_line <- function(...){
-  
-  list(geom_line(...), 
-       aes_default(aes(group = 1))
-       )
-  
-}
-  
 
 digging_table <- fork_and_spoon_table |>
   bind_rows(shovel_and_bucket_table) |>
   bind_rows(paws_table)
+```
+
+``` r
+#' @export
+chart_line <- function(...){
+  
+  list(ggplot2::geom_line(...), 
+       aes_default(ggplot2::aes(group = 1))
+       )
+  
+}
+  
 ```
 
 </details>
@@ -789,22 +796,25 @@ digging_table <- fork_and_spoon_table |>
 <details>
 
 ``` r
-
 outer_space_data <- data.frame(shuttle = paste0("🚀#", 1:6), fuel = c(.3,.5,.3, .8,.7, .4))
+```
 
+``` r
+#' @export
 chart_portion_full <- function(...){
   
   list(
-       geom_col(fill = "transparent", aes(y = 1)),
-       geom_col( ... ),
+       ggplot2::geom_col(fill = "transparent", ggplot2::aes(y = 1)),
+       ggplot2::geom_col( ... ),
        aes_default(aes(color = from_theme(ink)))
        )
   
 }
 
+#' @export
 stamp_hline <- function(y = .5, linetype = "dashed", ...){
   
-  geom_hline(yintercept = y, linetype = linetype, ...)
+  ggplot2::geom_hline(yintercept = y, linetype = linetype, ...)
   
 }
 ```
@@ -819,27 +829,30 @@ stamp_hline <- function(y = .5, linetype = "dashed", ...){
     #> 5    🚀#5  0.7
     #> 6    🚀#6  0.4
 
-<img src="man/figures/README-unnamed-chunk-27-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-28-1.png" width="100%" />
 
 # Scooter Repair Cost
 
 <details>
 
 ``` r
-
+#' @export
 scale_y_counting <- function(breaks = 0:10000, ...){
 
   ggplot2::scale_y_continuous(breaks = breaks)
 
 }
 
+
+#' @export
 scale_x_counting <- function(breaks = 0:10000, ...){
 
   ggplot2::scale_x_continuous(breaks = breaks)
 
 }
+```
 
-
+``` r
 weeks <- c(0,1,2)
 num_coins <- c(1,2,3)
 coin <- c("🪙", "🪙🪙", "🪙🪙🪙")
@@ -852,32 +865,24 @@ usethis::use_data(scooter_table, overwrite = T)
 ``` r
 compute_panel_count <- function(data, scales){
             data |> 
-             uncount(y, .remove = F)
+             tidyr::uncount(y, .remove = F)
            }
 
-scooter_table |> 
-  select(x = weeks, y = num_coins) |> 
-  compute_panel_count()
-#> # A tibble: 6 × 2
-#>       x     y
-#>   <dbl> <dbl>
-#> 1     0     1
-#> 2     1     2
-#> 3     1     2
-#> 4     2     3
-#> 5     2     3
-#> 6     2     3
+# scooter_table |> 
+#   select(x = weeks, y = num_coins) |> 
+#   compute_panel_count()
 
+#' @export
 chart_mark_count <- function(...){
   list(
-  qlayer(geom = GeomText,
+  qlayer(geom = ggplot2::GeomText,
          stat = qstat(compute_panel = compute_panel_count), 
          position = position_jitter(width = .12, height = .12),
          ..., show.legend = F),
-  aes_default(aes(x = 0)),
-  aes_default(aes(y = 0)),
-  aes_default(aes(label = "x")),
-  scale_size(range = c(2,10))
+  aes_default(ggplot2::aes(x = 0)),
+  aes_default(ggplot2::aes(y = 0)),
+  aes_default(ggplot2::aes(label = "x")),
+  ggplot2::scale_size(range = c(2,10))
   
   )
   }
@@ -981,15 +986,16 @@ ggkids(data = temps_data) +
 # Stacking Cars …
 
 ``` r
-write_table(~car, ~count,
+'write_table(~car, ~count,
             "🚗", 10,
             "🚕", 5,
             "🚓", 2) |> 
   ggkids() + 
   use_x(car) + 
   use_y(count) +
-  chart_item_stack() + 
-  use_picture(car)
+  chart_mark_stack() + 
+  use_picture(car)' |> 
+  ggram::ggram(code = _, title = "Data kids stack cars!")
 ```
 
 <img src="man/figures/README-unnamed-chunk-33-1.png" width="100%" />
@@ -997,16 +1003,17 @@ write_table(~car, ~count,
 # Minimal Packaging
 
 ``` r
-knitrExtra:::chunk_names_get()
-#>  [1] "unnamed-chunk-1"  "setup"            "unnamed-chunk-2"  "theme_kids"      
-#>  [5] "unnamed-chunk-3"  "ggkids"           "unnamed-chunk-4"  "unnamed-chunk-5" 
-#>  [9] "aes_to_use"       "unnamed-chunk-6"  "unnamed-chunk-7"  "chart_pie"       
-#> [13] "unnamed-chunk-8"  "unnamed-chunk-9"  "unnamed-chunk-10" "crustaceans"     
-#> [17] "GeomPointFill"    "unnamed-chunk-11" "unnamed-chunk-12" "unnamed-chunk-13"
-#> [21] "unnamed-chunk-14" "unnamed-chunk-15" "unnamed-chunk-16" "jungle_table"    
-#> [25] "unnamed-chunk-17" "unnamed-chunk-18" "unnamed-chunk-19" "unnamed-chunk-20"
-#> [29] "unnamed-chunk-21" "unnamed-chunk-22" "unnamed-chunk-23" "unnamed-chunk-24"
-#> [33] "unnamed-chunk-25" "unnamed-chunk-26" "shuttles"         "unnamed-chunk-27"
-#> [37] "unnamed-chunk-28" "unnamed-chunk-29" "unnamed-chunk-30" "unnamed-chunk-31"
-#> [41] "unnamed-chunk-32" "unnamed-chunk-33" "unnamed-chunk-34"
+code_chunks <- knitrExtra:::chunk_names_get()[!knitrExtra:::chunk_names_get() |> stringr::str_detect("unnamed")]
+
+knitrExtra::chunk_to_dir(code_chunks)
+```
+
+``` r
+usethis::use_package("ggplot2")
+usethis::use_package("tidyr")
+usethis::use_package("dplyr")
+
+devtools::document()
+devtools::check()
+devtools::install(".", upgrade = "never")
 ```
