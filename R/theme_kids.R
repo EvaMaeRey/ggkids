@@ -7,7 +7,8 @@ theme_kids <- function(paper = "grey98",
                          ink = ink, 
                          base_size = base_size, 
                          base_family = base_family, ...
-    ) 
+    ) + 
+    theme(plot.title.position = "plot")
 }
 
 

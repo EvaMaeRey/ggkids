@@ -50,7 +50,7 @@ use_size <- function(size){aes(size = {{size}})}
 use_shape <- function(shape){aes(shape = {{shape}})}
 
 #' @export
-use_color <- function(color){aes(fill = {{color}})}
+use_color <- function(color){aes(fill = {{color}}, color = {{color}})}
 
 
 #' @export

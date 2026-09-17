@@ -15,6 +15,7 @@ ggkids
 - [Mood Repair](#mood-repair)
 - [Clothing count & temp variation](#clothing-count--temp-variation)
 - [Stacking Cars …](#stacking-cars-)
+- [High school history…](#high-school-history)
 - [Minimal Packaging](#minimal-packaging)
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -90,7 +91,8 @@ theme_kids <- function(paper = "grey98",
                          ink = ink, 
                          base_size = base_size, 
                          base_family = base_family, ...
-    ) 
+    ) + 
+    theme(plot.title.position = "plot")
 }
 
 
@@ -216,7 +218,7 @@ use_size <- function(size){aes(size = {{size}})}
 use_shape <- function(shape){aes(shape = {{shape}})}
 
 #' @export
-use_color <- function(color){aes(fill = {{color}})}
+use_color <- function(color){aes(fill = {{color}}, color = {{color}})}
 
 
 #' @export
@@ -999,6 +1001,54 @@ ggkids(data = temps_data) +
 ```
 
 <img src="man/figures/README-unnamed-chunk-33-1.png" width="100%" />
+
+# High school history…
+
+``` r
+
+#install.packages("HistData")
+library(tidyverse)
+
+chart_path <- make_constructor(GeomPath, lineend = "round")
+
+use_linewidth <- function(linewidth){
+  
+  aes(linewidth = {{linewidth}}) 
+
+  }
+
+options(scipen = 10)
+
+ggteens <- ggkids
+
+
+
+
+
+march_to_moscow <- HistData::Minard.troops |> 
+  rename(longitude = long,
+         latitude = lat) |>
+  left_join(HistData::Minard.temp |> 
+  mutate(direction = "R")) |> 
+  filter(group == 1) |>
+  mutate(direction = ifelse(direction == "A", "Attack", "Retreat")) |>   
+  mutate(tenth_remain = (survivors - max(survivors)*.1) > 0,
+         tenth_gone = (survivors - max(survivors)*.9) > 0) 
+  
+usethis::use_data(march_to_moscow, overwrite = T)
+
+  
+march_to_moscow |> 
+  ggteens() + 
+  label_title("What happened on Napoleons March to Moscow?") +
+  use_x(longitude) + 
+  use_y(latitude) + 
+  chart_path() + 
+  use_linewidth(survivors) + 
+  use_color(direction)
+```
+
+<img src="man/figures/README-unnamed-chunk-34-1.png" width="100%" />
 
 # Minimal Packaging
 
